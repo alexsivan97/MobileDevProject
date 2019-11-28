@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+
+    <item android:id="@+id/item_home_navigation_1"
+        android:title="首页"
+        app:showAsAction="always"
+        android:icon="@drawable/ic_home_black_24dp"
+        >
+    </item>
+    <item android:id="@+id/item_home_navigation_2"
+        android:title="发现"
+        app:showAsAction="always"
+        android:icon="@drawable/ic_add_circle_black_24dp"
+        >
+    </item>
+    <item android:id="@+id/item_home_navigation_3"
+        android:title="我的"
+        app:showAsAction="always"
+        android:icon="@drawable/ic_person_black_24dp"
+        >
+    </item>
+
+</menu>
