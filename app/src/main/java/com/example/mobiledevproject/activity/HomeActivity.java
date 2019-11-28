@@ -49,30 +49,35 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void dataInit(){
-        infoList = new ArrayList<>();
+        infoList = new ArrayList<GroupCreate>();
 
         //  添加一个静态数据测试
-        GroupCreate test = new GroupCreate("testName", "testDes");
-        infoList.add(test);
+//        GroupCreate test = new GroupCreate("testName2", "testDes2");
+//        infoList.add(test);
+//        //  添加一个静态数据测试
+//        GroupCreate test2 = new GroupCreate("testName1", "testDes1");
+//        infoList.add(test2);
+//        //  添加一个静态数据测试
+//        GroupCreate test3 = new GroupCreate("testName0", "testDes0");
+//        infoList.add(test3);
     }
 
     private void viewSetOnClick(){
         groupsMcv.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Log.i(TAG, "onClick: 添加一个圈子");
-//                Intent intent = new Intent(HomeActivity.this, CreateGroupActivity.class);
-//                startActivityForResult(intent, 1);
-//            }
-
-//            only for test
             @Override
             public void onClick(View v) {
-                Log.i(TAG, "onClick: 添加一个圈子test");
-                Log.i(TAG, "addGroupItem: list size is "+infoList.size());
-                adapter.addData(infoList.size());
+                Log.i(TAG, "onClick: 添加一个圈子");
+                Intent intent = new Intent(HomeActivity.this, CreateGroupActivity.class);
+                startActivityForResult(intent, 1);
             }
 
+//            only for test
+//            @Override
+//            public void onClick(View v) {
+//                Log.i(TAG, "onClick: 添加一个圈子test");
+//                Log.i(TAG, "addGroupItem: list size is "+infoList.size());
+//                adapter.addData(infoList.size());
+//            }
 
         });
     }
@@ -82,6 +87,7 @@ public class HomeActivity extends AppCompatActivity {
         adapter.addData(createdGroup, infoList.size());
 
         Log.i(TAG, "addGroupItem: add an item");
+        Log.i(TAG, "addGroupItem: list size "+infoList.size());
     }
 
     private void initRecycleView(){
