@@ -1,6 +1,8 @@
 package com.example.mobiledevproject.model;
 
-public class GroupCreate {
+import java.io.Serializable;
+
+public class GroupCreate implements Serializable {
 
     private String groupName;
     private int groupId;
