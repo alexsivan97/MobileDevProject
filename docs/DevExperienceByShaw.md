@@ -51,6 +51,9 @@ annotationProcessor 'com.jakewharton:butterknife-compiler:10.0.0'
 ```
 - as插件：File | Settings | Plugins 搜索butterknife，下载安装Android butterknife Zeleney，就可以在generate选项中自动生成组件引用和绑定对应的ui控件。快捷键alt+insert。
 
+## 定义接口在完成一些操作
+- 三个界面的自定义fragment都继承自android的fragment类，但是三个自定义frag中都要实现一个getTitle()方法，而父类中没有这个方法。为了把三类自定义frag都放在一个list中，可以让三个自定义frag都实现一个接口I，把List< Fragment >改成List< I >，在接口中定义getTitle()方法。
+- 此处感谢旭哥指导
 # bug调试
 
 ## R不存在

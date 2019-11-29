@@ -71,19 +71,28 @@
 
 
     </androidx.recyclerview.widget.RecyclerView>
+    
+    <androidx.viewpager.widget.ViewPager
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+
+        app:layout_constraintBottom_toTopOf="@id/nav_home_bottom"
+        app:layout_constraintTop_toBottomOf="@id/hgl_0.1"
+
+
+        >
+
+
+    </androidx.viewpager.widget.ViewPager>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/nav_home_bottom"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_chainStyle="spread"
-        android:orientation="horizontal"
         app:menu="@menu/menu_bottomnavigation"
         >
     </com.google.android.material.bottomnavigation.BottomNavigationView>
-
-
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

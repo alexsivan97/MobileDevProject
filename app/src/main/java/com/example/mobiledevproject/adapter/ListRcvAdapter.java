@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.mobiledevproject.R;
 import com.example.mobiledevproject.activity.CheckinActivity;
 import com.example.mobiledevproject.model.GroupCreate;
+import com.google.android.material.card.MaterialCardView;
 
 import java.util.List;
 
@@ -46,7 +47,7 @@ public class ListRcvAdapter extends RecyclerView.Adapter<ListRcvAdapter.GroupVie
         holder.descriptionTv.setText(group.getDescription());
 
         //  可以封装一下
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
+        holder.groupMvc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.i(TAG, "onClick: "+position);
@@ -84,11 +85,13 @@ public class ListRcvAdapter extends RecyclerView.Adapter<ListRcvAdapter.GroupVie
     public static class GroupViewHolder extends RecyclerView.ViewHolder{
         TextView groupNameTv;
         TextView descriptionTv;
+        MaterialCardView groupMvc;
         View itemView;
 
         public GroupViewHolder(View itemView){
             super(itemView);
             this.itemView = itemView;
+            groupMvc = itemView.findViewById(R.id.mcv_group_name);
             groupNameTv = itemView.findViewById(R.id.tv_group_name);
             descriptionTv = itemView.findViewById(R.id.tv_group_description);
         }

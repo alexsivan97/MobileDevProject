@@ -1,17 +1,103 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+
     tools:context=".fragment.ManageFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="管理界面"
-        android:textAlignment="center"
-        android:id="@+id/tv_manage_content"
+    <androidx.constraintlayout.widget.Guideline
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:id="@+id/hgl_0.05"
+        android:orientation="horizontal"
+
+        app:layout_constraintGuide_percent="0.05"
         />
 
-</FrameLayout>
+    <androidx.constraintlayout.widget.Guideline
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:id="@+id/vgl_0.05"
+        android:orientation="vertical"
+
+        app:layout_constraintGuide_percent="0.05"
+        />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:id="@+id/vgl_0.95"
+        android:orientation="vertical"
+
+        app:layout_constraintGuide_percent="0.95"
+        />
+
+
+
+    <!-- TODO: Update blank fragment layout -->
+
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/ic_date_range_black_24dp"
+        android:drawablePadding="10dp"
+        android:text="打卡日历"
+        android:textSize="@dimen/item_text_size"
+        android:id="@+id/tv_manage_calendar"
+
+        app:layout_constraintTop_toBottomOf="@id/hgl_0.05"
+        app:layout_constraintLeft_toRightOf="@id/vgl_0.05"
+        app:layout_constraintRight_toLeftOf="@id/vgl_0.95"
+        app:layout_constraintVertical_chainStyle="packed"
+        />
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/ic_settings_black_24dp"
+        android:drawablePadding="10dp"
+        android:text="修改设置"
+        android:textSize="@dimen/item_text_size"
+        android:id="@+id/tv_manage_settings"
+
+        app:layout_constraintTop_toBottomOf="@id/tv_manage_calendar"
+        app:layout_constraintLeft_toRightOf="@id/vgl_0.05"
+        app:layout_constraintRight_toLeftOf="@id/vgl_0.95"
+        />
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/ic_group_add_black_24dp"
+        android:drawablePadding="10dp"
+        android:text="邀请成员"
+        android:textSize="@dimen/item_text_size"
+        android:id="@+id/tv_manage_invite"
+
+        app:layout_constraintTop_toBottomOf="@id/tv_manage_settings"
+        app:layout_constraintLeft_toRightOf="@id/vgl_0.05"
+        app:layout_constraintRight_toLeftOf="@id/vgl_0.95"
+        />
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/ic_exit_to_app_black_24dp"
+        android:drawablePadding="10dp"
+        android:text="退出圈子"
+        android:textSize="@dimen/item_text_size"
+        android:id="@+id/tv_manage_exit"
+
+        app:layout_constraintTop_toBottomOf="@id/tv_manage_invite"
+        app:layout_constraintLeft_toRightOf="@id/vgl_0.05"
+        app:layout_constraintRight_toLeftOf="@id/vgl_0.95"
+        />
+
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -4,14 +4,12 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
 import com.example.mobiledevproject.R;
 import com.example.mobiledevproject.interfaces.GetFragmentInfo;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
@@ -19,8 +17,6 @@ import butterknife.Unbinder;
 public class ManageFragment extends Fragment implements GetFragmentInfo {
 
 
-    @BindView(R.id.tv_manage_content)
-    TextView contentTv;
 
     Unbinder unbinder;
     String title, content;
@@ -50,7 +46,6 @@ public class ManageFragment extends Fragment implements GetFragmentInfo {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_manage, container, false);
         unbinder = ButterKnife.bind(this, view);
-        contentTv.setText(content);
         return view;
     }
 
