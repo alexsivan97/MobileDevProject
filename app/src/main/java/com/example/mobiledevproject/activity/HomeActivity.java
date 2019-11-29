@@ -31,6 +31,8 @@ public class HomeActivity extends AppCompatActivity {
     RecyclerView listRcv;
     List<GroupCreate> infoList;
 
+    //  添加fragment列表
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

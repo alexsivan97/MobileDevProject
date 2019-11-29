@@ -31,6 +31,7 @@ public class CheckinActivity extends AppCompatActivity {
     ViewPager contentsVp;
 
     List<GetFragmentInfo> fragmentList;
+
     @BindView(R.id.iv_checkin_groupicon)
     ImageView groupIconIv;
     @BindView(R.id.tv_checkin_name)
