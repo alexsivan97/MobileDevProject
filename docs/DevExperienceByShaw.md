@@ -37,9 +37,13 @@
 - 尝试了一下EditText，提供的wiki不太会用，不知道是不是版本号的问题
 
 
-# 其他工具
+# 开发技巧
+
+## intent传递信息
+- 如果需要携带对象作为putExtra的内容，那么这个对象要实现序列化
 
 ## 组件自动绑定库 butterknife
+- 替代findViewById，减少冗余代码，貌似还能提高性能
 - 配置：之前网上的8.8.0版本和androidx有不兼容的地方，经查资料改成10.0.0就可以使用了。
 ```
 implementation 'com.jakewharton:butterknife:10.0.0'

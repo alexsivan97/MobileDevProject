@@ -3,15 +3,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragment.ManageFragment">
+    tools:context=".fragment.GroupCheckinFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="管理界面"
+        android:text="打卡情况界面"
         android:textAlignment="center"
-        android:id="@+id/tv_manage_content"
+        android:id="@+id/tv_group_checkin_content"
+
         />
 
 </FrameLayout>

@@ -7,7 +7,10 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.example.mobiledevproject.R;
 import com.example.mobiledevproject.adapter.ContentsVpAdapter;
+import com.example.mobiledevproject.fragment.GroupCheckinFragment;
+import com.example.mobiledevproject.fragment.IntroFragment;
 import com.example.mobiledevproject.fragment.ManageFragment;
+import com.example.mobiledevproject.interfaces.GetFragmentInfo;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
@@ -23,7 +26,7 @@ public class CheckinActivity extends AppCompatActivity {
     @BindView(R.id.vp_checkin_contents)
     ViewPager contentsVp;
 
-    List<ManageFragment> fragmentList;
+    List<GetFragmentInfo> fragmentList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,9 +40,10 @@ public class CheckinActivity extends AppCompatActivity {
 
     private void viewPagerInit() {
         fragmentList = new ArrayList<>();
-        for(int i=0;i<3;++i){
-            fragmentList.add(ManageFragment.newInstance("标题"+i, "内容"+i));
-        }
+        fragmentList.add(IntroFragment.newInstance("简介", "内容"));
+        fragmentList.add(GroupCheckinFragment.newInstance("圈子","内容"));
+        fragmentList.add(ManageFragment.newInstance("管理", "内容"));
+
         contentsVp.setAdapter(new ContentsVpAdapter(getSupportFragmentManager(), fragmentList));
     }
 

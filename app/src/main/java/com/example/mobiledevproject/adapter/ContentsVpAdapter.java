@@ -6,14 +6,14 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
-import com.example.mobiledevproject.fragment.ManageFragment;
+import com.example.mobiledevproject.interfaces.GetFragmentInfo;
 
 import java.util.List;
 
 public class ContentsVpAdapter extends FragmentPagerAdapter {
 
-    List<ManageFragment> fragmentList;
-    public ContentsVpAdapter(FragmentManager fm, List<ManageFragment> fragmentList){
+    List<GetFragmentInfo> fragmentList;
+    public ContentsVpAdapter(FragmentManager fm, List<GetFragmentInfo> fragmentList){
         super(fm);
         this.fragmentList = fragmentList;
     }
@@ -27,7 +27,8 @@ public class ContentsVpAdapter extends FragmentPagerAdapter {
     @NonNull
     @Override
     public Fragment getItem(int position) {
-        return fragmentList.get(position);
+
+        return (Fragment)fragmentList.get(position);
     }
 
     @Override

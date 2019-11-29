@@ -46,15 +46,15 @@ public class ListRcvAdapter extends RecyclerView.Adapter<ListRcvAdapter.GroupVie
         holder.descriptionTv.setText(group.getDescription());
 
         //  可以封装一下
-        holder.descriptionTv.setOnClickListener(new View.OnClickListener() {
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.i(TAG, "onClick: "+position);
-                Intent intent = new Intent(context, CheckinActivity.class);
-                context.startActivity(intent);
+                GroupCreate group = infoList.get(position);
 
-//                GroupCreate group = infoList.get(position);
-//                Log.i(TAG, "onClick: this group is "+group.getGroupName());
+                Intent intent = new Intent(context, CheckinActivity.class);
+                intent.putExtra("group_info", group);
+                context.startActivity(intent);
             }
         });
 
