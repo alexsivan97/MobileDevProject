@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.CheckinActivity">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:id="@+id/hgl_0.05"
+
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.05"
+        />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:id="@+id/hgl_0.25"
+
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.25"
+        />
+
+    <!--margin left-->
+    <androidx.constraintlayout.widget.Guideline
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:id="@+id/vgl_0.05"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.05"
+        />
+
+    <!--margin right-->
+    <androidx.constraintlayout.widget.Guideline
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:id="@+id/vgl_0.95"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.95"
+        />
+
+    <ImageView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:id="@+id/iv_checkin_groupicon"
+
+        app:layout_constraintTop_toBottomOf="@id/hgl_0.05"
+        app:layout_constraintBottom_toTopOf="@id/hgl_0.25"
+        app:layout_constraintLeft_toRightOf="@id/vgl_0.05"
+        app:layout_constraintDimensionRatio="1"
+        />
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:id="@+id/tv_checkin_name"
+        android:text="圈子名称"
+        android:textAlignment="center"
+
+        app:layout_constraintLeft_toRightOf="@id/iv_checkin_groupicon"
+        app:layout_constraintRight_toLeftOf="@id/vgl_0.95"
+
+        app:layout_constraintTop_toBottomOf="@id/hgl_0.05"
+        app:layout_constraintBottom_toTopOf="@id/tv_checkin_membernum"
+        />
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:id="@+id/tv_checkin_membernum"
+        android:text="成员 5人 >"
+        android:textAlignment="center"
+        app:layout_constraintLeft_toRightOf="@id/iv_checkin_groupicon"
+        app:layout_constraintRight_toLeftOf="@id/vgl_0.95"
+        app:layout_constraintTop_toBottomOf="@id/tv_checkin_name"
+        app:layout_constraintBottom_toTopOf="@id/hgl_0.25"
+
+        />
+
+    <com.google.android.material.tabs.TabLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/tl_checkin_funcs"
+
+        app:layout_constraintTop_toBottomOf="@id/hgl_0.25"
+        app:layout_constraintLeft_toRightOf="@id/vgl_0.05"
+        app:layout_constraintRight_toLeftOf="@id/vgl_0.95"
+
+        app:tabIndicatorHeight="5dp"
+        app:tabMode="fixed"
+        >
+    </com.google.android.material.tabs.TabLayout>
+
+    <androidx.viewpager.widget.ViewPager
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:id="@+id/vp_checkin_contents"
+
+        app:layout_constraintTop_toBottomOf="@id/tl_checkin_funcs"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/vgl_0.05"
+        app:layout_constraintRight_toLeftOf="@id/vgl_0.95"
+        >
+    </androidx.viewpager.widget.ViewPager>
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

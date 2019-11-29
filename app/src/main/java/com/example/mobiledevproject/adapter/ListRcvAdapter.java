@@ -1,6 +1,7 @@
 package com.example.mobiledevproject.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mobiledevproject.R;
+import com.example.mobiledevproject.activity.CheckinActivity;
 import com.example.mobiledevproject.model.GroupCreate;
 
 import java.util.List;
@@ -31,6 +33,8 @@ public class ListRcvAdapter extends RecyclerView.Adapter<ListRcvAdapter.GroupVie
     @Override
     public GroupViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.item_group, parent, false);
+
+
         return new GroupViewHolder(view);
     }
 
@@ -40,6 +44,22 @@ public class ListRcvAdapter extends RecyclerView.Adapter<ListRcvAdapter.GroupVie
         GroupCreate group = infoList.get(position);
         holder.groupNameTv.setText(group.getGroupName());
         holder.descriptionTv.setText(group.getDescription());
+
+        //  可以封装一下
+        holder.descriptionTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.i(TAG, "onClick: "+position);
+                Intent intent = new Intent(context, CheckinActivity.class);
+                context.startActivity(intent);
+
+//                GroupCreate group = infoList.get(position);
+//                Log.i(TAG, "onClick: this group is "+group.getGroupName());
+            }
+        });
+
+
+
     }
 
     @Override
@@ -62,11 +82,13 @@ public class ListRcvAdapter extends RecyclerView.Adapter<ListRcvAdapter.GroupVie
 
 
     public static class GroupViewHolder extends RecyclerView.ViewHolder{
-        public TextView groupNameTv;
-        public TextView descriptionTv;
+        TextView groupNameTv;
+        TextView descriptionTv;
+        View itemView;
 
         public GroupViewHolder(View itemView){
             super(itemView);
+            this.itemView = itemView;
             groupNameTv = itemView.findViewById(R.id.tv_group_name);
             descriptionTv = itemView.findViewById(R.id.tv_group_description);
         }
