@@ -17,10 +17,8 @@ public class ExploreFragment extends Fragment {
         // Required empty public constructor
     }
 
-
-    public static ExploreFragment newInstance(String param1, String param2) {
+    public static ExploreFragment newInstance() {
         ExploreFragment fragment = new ExploreFragment();
-
         return fragment;
     }
 

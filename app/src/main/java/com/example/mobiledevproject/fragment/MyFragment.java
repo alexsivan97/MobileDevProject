@@ -18,9 +18,8 @@ public class MyFragment extends Fragment {
     }
 
 
-    public static MyFragment newInstance(String param1, String param2) {
+    public static MyFragment newInstance() {
         MyFragment fragment = new MyFragment();
-
         return fragment;
     }
 

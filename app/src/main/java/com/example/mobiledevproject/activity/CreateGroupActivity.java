@@ -43,6 +43,8 @@ public class CreateGroupActivity extends AppCompatActivity {
                 GroupCreate info = getCreateInfo();
                 Group group = new Group(info);
 
+                //  传输数据的部分
+
 //                //上传json格式数据
 //                Gson gson = new Gson();
 //                String jsonInfo= gson.toJson(group);
