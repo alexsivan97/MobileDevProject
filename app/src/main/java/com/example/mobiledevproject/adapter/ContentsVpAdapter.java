@@ -1,6 +1,7 @@
 package com.example.mobiledevproject.adapter;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
@@ -17,11 +18,11 @@ public class ContentsVpAdapter extends FragmentPagerAdapter {
         this.fragmentList = fragmentList;
     }
 
-//    @Nullable
-//    @Override
-//    public CharSequence getPageTitle(int position) {
-//        return fragmentList.get(position).getTitle();
-//    }
+    @Nullable
+    @Override
+    public CharSequence getPageTitle(int position) {
+        return fragmentList.get(position).getTitle();
+    }
 
     @NonNull
     @Override

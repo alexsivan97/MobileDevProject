@@ -1,28 +1,19 @@
 package com.example.mobiledevproject.activity;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.ListAdapter;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Context;
 import android.content.Intent;
-import android.database.DataSetObserver;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.Message;
-import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Adapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageButton;
+
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.mobiledevproject.R;
 import com.example.mobiledevproject.adapter.BitmapAdapter;
 import com.example.mobiledevproject.model.MessageBean;
@@ -77,7 +68,7 @@ public class CheckinActivity extends AppCompatActivity {
                 } else {
                     //获取提交时间作为文件名
                     Date date = new Date();
-                    SimpleDateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd :hh:mm");
+                    SimpleDateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd hh:mm");
                     String time = dateFormat.format(date);
                     messageBean =  new MessageBean(userId,content,localImages,onlineImages,time);
                     String path = userId;

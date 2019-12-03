@@ -1,34 +1,24 @@
 package com.example.mobiledevproject.activity;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.mobiledevproject.R;
-import com.example.mobiledevproject.adapter.BitmapAdapter;
 import com.example.mobiledevproject.adapter.ContentsVpAdapter;
-import com.example.mobiledevproject.adapter.DynamicAdapter;
 import com.example.mobiledevproject.fragment.GroupCheckinFragment;
 import com.example.mobiledevproject.fragment.IntroFragment;
 import com.example.mobiledevproject.fragment.ManageFragment;
 import com.example.mobiledevproject.interfaces.GetFragmentInfo;
 import com.example.mobiledevproject.model.GroupCreate;
-import com.example.mobiledevproject.model.MessageBean;
 import com.google.android.material.tabs.TabLayout;
 
-import java.io.BufferedInputStream;
-import java.io.FileInputStream;
-import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,21 +40,24 @@ public class GroupActivity extends AppCompatActivity {
     TextView nameTv;
     @BindView(R.id.tv_checkin_membernum)
     TextView memberNumTv;
+    @BindView(R.id.btn_checkin)
+    Button checkinBtn;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group);
         ButterKnife.bind(this);
+
         viewPagerInit();
         tabInit();
         intentReceived();
         //===================测试====================
-        Button checkin = findViewById(R.id.btn_checkin);
-        checkin.setOnClickListener(new View.OnClickListener() {
+        checkinBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(GroupActivity.this,CheckinActivity.class);
+                Intent intent = new Intent(GroupActivity.this, CheckinActivity.class);
                 startActivity(intent);
             }
         });

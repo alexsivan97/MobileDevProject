@@ -16,6 +16,7 @@
 - 导航栏控件有默认的区分active和inactive的图标，如果想自定义要配置一个selector
 - as中有自带的icon，在drawable下new-Vector Asset选择，可以自由修改颜色和大小
 - 也可以在java文件中通过addItem(new BottomNavigationItem)来添加
+- bottomnavigationview+viewpager+fragment来实现界面切换
 
 ## 卡片 MaterialCardView
 - 每个卡片里面可以包含一个组件，它只是一张卡片，而不是卡片列表
@@ -41,6 +42,7 @@
 
 ## intent传递信息
 - 如果需要携带对象作为putExtra的内容，那么这个对象要实现序列化
+- 如果是fragment向外传递信息，那么参数就要变成getActivity()，来替代活动中的MainActivity.this。
 
 ## 组件自动绑定库 butterknife
 - 替代findViewById，减少冗余代码，貌似还能提高性能
@@ -54,8 +56,22 @@ annotationProcessor 'com.jakewharton:butterknife-compiler:10.0.0'
 ## 定义接口在完成一些操作
 - 三个界面的自定义fragment都继承自android的fragment类，但是三个自定义frag中都要实现一个getTitle()方法，而父类中没有这个方法。为了把三类自定义frag都放在一个list中，可以让三个自定义frag都实现一个接口I，把List< Fragment >改成List< I >，在接口中定义getTitle()方法。
 - 此处感谢旭哥指导
+
 # bug调试
 
 ## R不存在
 - 默认的activity文件直接放在java包下，如果要新建一个activity package，需要在activity.java中手动导入r包
 - 在File | Settings | Editor | General | Auto Import中可以勾选自动导入
+
+## 使用ButterKnife
+- 千万别忘了除了快捷简便的自动生成，还要再create中写上
+```
+    ButterKnife.bind(this);
+```
+- 如果是在fragment中写，要在createView中写上
+```
+    ButterKnife.bind(this, view);
+```
+
+## 让底部按钮随着页面的滑动一起变化
+要重写addOnPageChangeListener中的onPageSelected方法，监听当前的position来设置menuitem的index。
