@@ -1,84 +1,145 @@
 package com.example.mobiledevproject.activity;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.widget.ImageView;
-import android.widget.TextView;
-
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.viewpager.widget.ViewPager;
+import androidx.recyclerview.widget.ListAdapter;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
+import android.content.Intent;
+import android.database.DataSetObserver;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.Build;
+import android.os.Bundle;
+import android.os.Environment;
+import android.os.Message;
+import android.util.Log;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Adapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.GridView;
+import android.widget.ImageButton;
 import com.example.mobiledevproject.R;
-import com.example.mobiledevproject.adapter.ContentsVpAdapter;
-import com.example.mobiledevproject.fragment.GroupCheckinFragment;
-import com.example.mobiledevproject.fragment.IntroFragment;
-import com.example.mobiledevproject.fragment.ManageFragment;
-import com.example.mobiledevproject.interfaces.GetFragmentInfo;
-import com.example.mobiledevproject.model.GroupCreate;
-import com.google.android.material.tabs.TabLayout;
+import com.example.mobiledevproject.adapter.BitmapAdapter;
+import com.example.mobiledevproject.model.MessageBean;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-
 public class CheckinActivity extends AppCompatActivity {
+    final static  String TAG = "CheckinActivity";
+    List<Bitmap> data;
+    private MessageBean  messageBean;
+    private ImageButton backIBtn;
+    private Button sendBtn;
+    private EditText contentET;
 
-    @BindView(R.id.tl_checkin_funcs)
-    TabLayout funcsTl;
-    @BindView(R.id.vp_checkin_contents)
-    ViewPager contentsVp;
-
-    List<GetFragmentInfo> fragmentList;
-
-    @BindView(R.id.iv_checkin_groupicon)
-    ImageView groupIconIv;
-    @BindView(R.id.tv_checkin_name)
-    TextView nameTv;
-    @BindView(R.id.tv_checkin_membernum)
-    TextView memberNumTv;
-
+    private GridView imageGV;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_checkin);
-        ButterKnife.bind(this);
-        viewPagerInit();
-        tabInit();
-        intentReceived();
+        initView();
+        loadData();
+        BitmapAdapter bitmapAdapter =  new BitmapAdapter(CheckinActivity.this,data);
+        imageGV.setAdapter(bitmapAdapter);
     }
+    protected void initView() {
+        backIBtn = findViewById(R.id.checkin_back_ibtn);
+        sendBtn = findViewById(R.id.checkin_send_btn);
+        contentET = findViewById(R.id.checkin_content_et);
+        imageGV = findViewById(R.id.checkin_image_gv);
+        sendBtn.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                String userId = "004";
+                String content = contentET.getText().toString();
+                List<String> localImages = null;
+                List<Bitmap> onlineImages = null;
+                System.out.println(content);
+                System.out.println("=================hhhhhhhhhhhhhhhhhhh============");
+                if (content == null && localImages == null) {
+
+                } else {
+                    //获取提交时间作为文件名
+                    Date date = new Date();
+                    SimpleDateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd :hh:mm");
+                    String time = dateFormat.format(date);
+                    messageBean =  new MessageBean(userId,content,localImages,onlineImages,time);
+                    String path = userId;
+                    try {
+
+                        List<MessageBean> messageBeanList;
+                        System.out.println(getFilesDir());
+
+                        String AbsolutePath = getFilesDir().toString();
+
+                        File file = new File(AbsolutePath +"/"+ path);
+                        if (file.exists()) {
+                            FileInputStream fileInputStream = openFileInput(path);
+                            ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
+                            messageBeanList = (ArrayList)objectInputStream.readObject();
+                            System.out.println("++++++++++++++++++++++");
+                            System.out.println(messageBeanList.size());
+                            fileInputStream.close();
+                            objectInputStream.close();
+                        } else {
+                            messageBeanList = new ArrayList<>();
+                        }
+                        messageBeanList.add(messageBean);
+                        FileOutputStream fileOutputStream = openFileOutput(path, Context.MODE_PRIVATE);
+                        ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
+                        objectOutputStream.writeObject(messageBeanList);
+                        fileOutputStream.close();
+                        objectOutputStream.close();
+                        System.out.println("=================hhhhhhhhhhhhhhhhhhh============");
+                    } catch (FileNotFoundException e) {
+
+                    } catch (IOException e){
+                        e.printStackTrace();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                    Intent intent = new Intent(CheckinActivity.this,GroupActivity.class);
+                    startActivity(intent);
+                }
+            }
+        });
+
+        backIBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
 
-    private void viewPagerInit() {
-        fragmentList = new ArrayList<>();
-        fragmentList.add(IntroFragment.newInstance("简介", "内容"));
-        fragmentList.add(GroupCheckinFragment.newInstance("圈子", "内容"));
-        fragmentList.add(ManageFragment.newInstance("管理", "内容"));
-
-        contentsVp.setAdapter(new ContentsVpAdapter(getSupportFragmentManager(), fragmentList));
     }
+    protected void loadData() {
+        data =  new ArrayList<>();
 
-    private void tabInit() {
-        funcsTl.setupWithViewPager(contentsVp);
+        System.out.println(Environment.getExternalStorageDirectory( ).getAbsolutePath());
+
+        String fileName1 = "/storage/emulated/0/Download/b1.png";
+        Bitmap bitmap1 = BitmapFactory.decodeFile(fileName1);
+        data.add(bitmap1);
+        String fileName2 = "/storage/emulated/0/Download/b2.png";
+        Bitmap bitmap2 = BitmapFactory.decodeFile(fileName2);
+        data.add(bitmap2);
     }
-
-    private void intentReceived() {
-        Intent intent = getIntent();
-        GroupCreate group = (GroupCreate) intent.getSerializableExtra("group_info");
-        viewSetInfo(group);
-    }
-
-    private void viewSetInfo(GroupCreate group) {
-
-        nameTv.setText(group.getGroupName());
-
-        //  此处成员数据要通过数据库读取
-        memberNumTv.setText("成员10人");
-
-        //  此处小组头像要通过数据库读取
-//        groupIconIv.setImageResource();
-
-    }
-
 }

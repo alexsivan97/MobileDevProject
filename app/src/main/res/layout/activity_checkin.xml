@@ -1,111 +1,99 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.CheckinActivity">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.constraintlayout.widget.Guideline
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:id="@+id/hgl_0.05"
-
+        android:id="@+id/hgl_0.02"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.05"
+
+        app:layout_constraintGuide_percent="0.02"
         />
 
     <androidx.constraintlayout.widget.Guideline
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:id="@+id/hgl_0.25"
-
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.25"
-        />
-
-    <!--margin left-->
-    <androidx.constraintlayout.widget.Guideline
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:id="@+id/vgl_0.05"
+        android:id="@+id/vgl_0.02"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.05"
+
+        app:layout_constraintGuide_percent="0.02"
         />
 
-    <!--margin right-->
     <androidx.constraintlayout.widget.Guideline
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:id="@+id/vgl_0.95"
+        android:id="@+id/vgl_0.98"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.95"
+
+        app:layout_constraintGuide_percent="0.98"
         />
 
-    <ImageView
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:id="@+id/iv_checkin_groupicon"
-        android:src="@drawable/ic_group_logo"
 
-        app:layout_constraintTop_toBottomOf="@id/hgl_0.05"
-        app:layout_constraintBottom_toTopOf="@id/hgl_0.25"
-        app:layout_constraintLeft_toRightOf="@id/vgl_0.05"
-        app:layout_constraintDimensionRatio="1"
-        />
-
-    <TextView
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:id="@+id/tv_checkin_name"
-        android:text="圈子名称"
-        android:textAlignment="center"
-        android:textSize="30dp"
-
-        app:layout_constraintLeft_toRightOf="@id/iv_checkin_groupicon"
-        app:layout_constraintRight_toLeftOf="@id/vgl_0.95"
-        app:layout_constraintTop_toBottomOf="@id/hgl_0.05"
-        app:layout_constraintBottom_toTopOf="@id/tv_checkin_membernum"
-        />
-
-    <TextView
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:id="@+id/tv_checkin_membernum"
-        android:text="成员 5人 >"
-        android:textAlignment="center"
-        app:layout_constraintLeft_toRightOf="@id/iv_checkin_groupicon"
-        app:layout_constraintRight_toLeftOf="@id/vgl_0.95"
-        app:layout_constraintTop_toBottomOf="@id/tv_checkin_name"
-        app:layout_constraintBottom_toTopOf="@id/hgl_0.25"
-
-        />
-
-    <com.google.android.material.tabs.TabLayout
-        android:layout_width="0dp"
+    <Button
+        android:id="@+id/checkin_send_btn"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/tl_checkin_funcs"
+        android:background="#33cc66"
+        android:text="发布"
+        android:textColor="@color/white"
+        android:textSize="25sp"
+        android:layout_marginTop="5dp"
+        app:layout_constraintTop_toTopOf="@id/hgl_0.02"
+        app:layout_constraintRight_toRightOf="@id/vgl_0.98"
+        />
+    <ImageButton
+        android:id="@+id/checkin_back_ibtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_checkin_back_24dp"
+        android:background="#00000000"
+        android:layout_marginTop="15dp"
+        app:layout_constraintTop_toTopOf="@id/hgl_0.02"
+        app:layout_constraintLeft_toLeftOf="@id/vgl_0.02"
+        />
 
-        app:layout_constraintTop_toBottomOf="@id/hgl_0.25"
-        app:layout_constraintLeft_toRightOf="@id/vgl_0.05"
-        app:layout_constraintRight_toLeftOf="@id/vgl_0.95"
-
-        app:tabIndicatorHeight="5dp"
-        app:tabMode="fixed"
-        >
-    </com.google.android.material.tabs.TabLayout>
-
-    <androidx.viewpager.widget.ViewPager
+    <EditText
+        android:id="@+id/checkin_content_et"
         android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:id="@+id/vp_checkin_contents"
+        android:layout_height="150dp"
+        android:background="#FFFFFF"
+        android:gravity="top"
+        android:hint="随手说出你此刻的心声..."
+        android:maxLength="500"
+        android:padding="8dp"
+        android:textColor="#000000"
+        android:textSize="20sp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintTop_toBottomOf="@id/checkin_send_btn"
+        app:layout_constraintLeft_toLeftOf="@id/vgl_0.02"
+        app:layout_constraintRight_toRightOf="@id/vgl_0.98"
 
-        app:layout_constraintTop_toBottomOf="@id/tl_checkin_funcs"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toRightOf="@id/vgl_0.05"
-        app:layout_constraintRight_toLeftOf="@id/vgl_0.95"
+        />
+    <GridView
+        android:id="@+id/checkin_image_gv"
+        android:layout_width="0dp"
+        android:layout_height="110dp"
+        android:background="#FFFFFF"
+        android:columnWidth="90dp"
+        android:gravity="center"
+        android:horizontalSpacing="5dp"
+        android:numColumns="4"
+        android:padding="10dp"
+        android:stretchMode="columnWidth"
+        android:verticalSpacing="5dp"
+        android:layout_marginTop="5dp"
+        app:layout_constraintTop_toBottomOf="@id/checkin_content_et"
+        app:layout_constraintLeft_toLeftOf="@id/vgl_0.02"
+        app:layout_constraintRight_toRightOf="@id/vgl_0.98"
         >
-    </androidx.viewpager.widget.ViewPager>
+
+    </GridView>
+
+
+
 
 
 
