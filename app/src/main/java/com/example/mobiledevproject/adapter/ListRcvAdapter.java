@@ -12,7 +12,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mobiledevproject.R;
-import com.example.mobiledevproject.activity.CheckinActivity;
+import com.example.mobiledevproject.activity.GroupActivity;
+import com.example.mobiledevproject.activity.GroupActivity;
 import com.example.mobiledevproject.model.GroupCreate;
 import com.google.android.material.card.MaterialCardView;
 
@@ -53,7 +54,7 @@ public class ListRcvAdapter extends RecyclerView.Adapter<ListRcvAdapter.GroupVie
                 Log.i(TAG, "onClick: "+position);
                 GroupCreate group = infoList.get(position);
 
-                Intent intent = new Intent(context, CheckinActivity.class);
+                Intent intent = new Intent(context, GroupActivity.class);
                 intent.putExtra("group_info", group);
                 context.startActivity(intent);
             }
