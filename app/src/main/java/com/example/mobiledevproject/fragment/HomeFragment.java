@@ -1,7 +1,6 @@
 package com.example.mobiledevproject.fragment;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -33,9 +32,6 @@ public class HomeFragment extends Fragment {
 
     private static final String TAG = "HomeFragment";
     Unbinder unbinder;
-    SharedPreferences pref;
-    SharedPreferences.Editor editor;
-
     private static final String SP_NAME = "sp_group_list";
     private static final String SP_GROUP_LIST_KEY = "group_list";
 
@@ -81,7 +77,6 @@ public class HomeFragment extends Fragment {
         dataInit();
         initRecycleView();
         viewSetOnClick();
-
 
     }
 
