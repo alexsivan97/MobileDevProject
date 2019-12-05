@@ -3,7 +3,7 @@ package com.example.mobiledevproject.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class User {
+public class UserCreate {
 
     @Expose(serialize=false)
     private int userId;
@@ -18,9 +18,13 @@ public class User {
     @SerializedName("password")
     private String password;
 
-    private String token;
+    public UserCreate(String userName, String password){
+        this.userName = userName;
+        this.password = password;
+    }
 
-    public User(String userName, String password){
+    public UserCreate(int userId, String userName, String password) {
+        this.userId = userId;
         this.userName = userName;
         this.password = password;
     }
@@ -47,13 +51,5 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
     }
 }

@@ -44,6 +44,28 @@
 - 如果需要携带对象作为putExtra的内容，那么这个对象要实现序列化
 - 如果是fragment向外传递信息，那么参数就要变成getActivity()，来替代活动中的MainActivity.this。
 
+## 使用okhttp3异步请求访问网络
+- okhttp3库中提供异步请求的方法，不需要自己开子线程。
+- 封装了两个发送get和post异步请求的方法。这里的post上传的是body中的数据，格式为json。
+- 别忘了给android加上访问INTERNET的权限。
+```
+    public static void getOkHttpRequest(String address, okhttp3.Callback callback){
+        OkHttpClient okHttpClient = new OkHttpClient();
+        Request request = new Request.Builder().url(address).build();
+        okHttpClient.newCall(request).enqueue(callback);
+    }
+
+    public static void postOkHttpRequest(String address, String jsonInfo, Callback callback){
+        OkHttpClient okHttpClient = new OkHttpClient();
+        RequestBody requestBody = RequestBody.create(MediaType
+                .parse("application/json; charset=utf-8"), jsonInfo);
+        Request request = new Request.Builder().url(address)
+                .post(requestBody)
+                .build();
+        okHttpClient.newCall(request).enqueue(callback);
+    }
+```
+
 ## 组件自动绑定库 butterknife
 - 替代findViewById，减少冗余代码，貌似还能提高性能
 - 配置：之前网上的8.8.0版本和androidx有不兼容的地方，经查资料改成10.0.0就可以使用了。

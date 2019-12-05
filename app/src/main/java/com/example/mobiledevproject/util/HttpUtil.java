@@ -8,14 +8,14 @@ import okhttp3.RequestBody;
 
 public class HttpUtil {
 
-    public static void sendOkHttpRequest(String address, okhttp3.Callback callback){
+    public static void getOkHttpRequest(String address, okhttp3.Callback callback){
         OkHttpClient okHttpClient = new OkHttpClient();
         Request request = new Request.Builder().url(address).build();
         okHttpClient.newCall(request).enqueue(callback);
 
     }
 
-    public static void postOkHttpRequest(String address, Callback callback, String jsonInfo){
+    public static void postOkHttpRequest(String address, String jsonInfo, Callback callback){
         OkHttpClient okHttpClient = new OkHttpClient();
         RequestBody requestBody = RequestBody.create(MediaType
                 .parse("application/json; charset=utf-8"), jsonInfo);
@@ -23,7 +23,5 @@ public class HttpUtil {
                 .post(requestBody)
                 .build();
         okHttpClient.newCall(request).enqueue(callback);
-
-
     }
 }

@@ -16,6 +16,7 @@ import com.example.mobiledevproject.fragment.ExploreFragment;
 import com.example.mobiledevproject.fragment.HomeFragment;
 import com.example.mobiledevproject.fragment.MyFragment;
 import com.example.mobiledevproject.model.GroupCreate;
+import com.example.mobiledevproject.model.User;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
@@ -25,9 +26,14 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
+
 public class HomeActivity extends AppCompatActivity {
 
     private static final String TAG = "HomeActivity";
+
+    //  来自登录界面的信息，这里先写成静态数据
+    private static User user;
+
 
     ListRcvAdapter adapter;
     List<GroupCreate> infoList;
@@ -42,13 +48,6 @@ public class HomeActivity extends AppCompatActivity {
 
     MenuItem menuItem;
 
-//    @BindView(R.id.tv_home_create_group)
-//    TextView createGroupTv;
-//    @BindView(R.id.mcv_home_groups)
-//    MaterialCardView groupsMcv;
-//    @BindView(R.id.rcv_home_list)
-//    RecyclerView listRcv;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,19 +55,17 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
         ButterKnife.bind(this);
 
-//        dataInit();
-//        initRecycleView();
-//        viewSetOnClick();
+        userInfoInit();
         viewPagerInit();
         navigationInit();
         bodyVp.setCurrentItem(0);
     }
 
 
-    private void dataInit() {
-
-        //  此处应该从数据库中加载已经加入的小组
-        infoList = new ArrayList<GroupCreate>();
+    private void userInfoInit(){
+        //  从intent中读取数据
+        user = new User("zx", "123");
+        user.setToken("");
 
     }
 
@@ -76,7 +73,7 @@ public class HomeActivity extends AppCompatActivity {
         fragList = new ArrayList<>();
         fragList.add(HomeFragment.newInstance());
         fragList.add(ExploreFragment.newInstance());
-        fragList.add(MyFragment.newInstance());
+        fragList.add(MyFragment.newInstance(user));
         bodyVp.setAdapter(new BodyVpAdapter(getSupportFragmentManager(), fragList));
 
         bodyVp.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -133,55 +130,5 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
     }
-
-//    private void viewSetOnClick() {
-//        groupsMcv.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Log.i(TAG, "onClick: 添加一个圈子");
-//                Intent intent = new Intent(HomeActivity.this, CreateGroupActivity.class);
-//                startActivityForResult(intent, 1);
-//            }
-//        });
-//    }
-
-//    private void addGroupItem(GroupCreate createdGroup) {
-//        adapter.addData(createdGroup, infoList.size());
-//
-//        Log.i(TAG, "addGroupItem: add an item");
-//        Log.i(TAG, "addGroupItem: list size " + infoList.size());
-//    }
-
-//    private void initRecycleView() {
-//        //  定义一个线性布局管理器
-//        LinearLayoutManager manager = new LinearLayoutManager(this);
-//        //  将管理器配置给recyclerView
-//        listRcv.setLayoutManager(manager);
-//        //  设置adapter
-//        adapter = new ListRcvAdapter(HomeActivity.this, infoList);
-//        //  添加adapter
-//        listRcv.setAdapter(adapter);
-//        //  添加动画
-//        listRcv.setItemAnimator(new DefaultItemAnimator());
-//    }
-
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//        switch (requestCode) {
-//            case 1:
-//                if (resultCode == RESULT_OK) {
-//                    GroupCreate createdGroup = (GroupCreate) data.getSerializableExtra("group_info");
-//                    Log.i(TAG, "onActivityResult: " + createdGroup.getGroupName());
-//
-//                    //  新圈子信息添加到列表
-//                    addGroupItem(createdGroup);
-//                    //  刷新界面
-//                    //  刷新的方法写在adapter中了
-//                }
-//                break;
-//            default:
-//        }
-//    }
 
 }

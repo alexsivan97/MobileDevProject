@@ -24,6 +24,15 @@
         app:layout_constraintGuide_percent="0.25"
         />
 
+    <androidx.constraintlayout.widget.Guideline
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:id="@+id/hgl_0.75"
+
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.55"
+        />
+
     <!--margin left-->
     <androidx.constraintlayout.widget.Guideline
         android:layout_width="0dp"
@@ -59,7 +68,7 @@
         android:layout_height="0dp"
         android:id="@+id/tv_my_username"
         android:text="用户名"
-        android:textAlignment="center"
+        android:gravity="center"
         android:textSize="30dp"
 
         app:layout_constraintLeft_toRightOf="@id/iv_my_userimage"
@@ -73,7 +82,7 @@
         android:layout_height="0dp"
         android:id="@+id/tv_my_userdescription"
         android:text="个性签名"
-        android:textAlignment="center"
+        android:gravity="center"
         app:layout_constraintLeft_toRightOf="@id/iv_my_userimage"
         app:layout_constraintRight_toLeftOf="@id/vgl_0.95"
         app:layout_constraintTop_toBottomOf="@id/tv_my_username"
@@ -83,57 +92,68 @@
 
     <TextView
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:drawableLeft="@drawable/ic_date_range_black_24dp"
         android:drawablePadding="10dp"
         android:text="个人资料"
         android:textSize="@dimen/item_manage_textsize"
-        android:id="@+id/tv_manage_calendar"
+        android:gravity="center_vertical"
+        android:id="@+id/tv_my_userinfo"
 
+        android:layout_marginTop="30dp"
         app:layout_constraintTop_toBottomOf="@id/iv_my_userimage"
+        app:layout_constraintBottom_toTopOf="@id/tv_my_usergroup"
         app:layout_constraintLeft_toRightOf="@id/vgl_0.05"
         app:layout_constraintRight_toLeftOf="@id/vgl_0.95"
-        app:layout_constraintVertical_chainStyle="packed"
+        app:layout_constraintVertical_chainStyle="spread"
         />
 
     <TextView
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:drawableLeft="@drawable/ic_settings_black_24dp"
         android:drawablePadding="10dp"
         android:text="我的圈子"
         android:textSize="@dimen/item_manage_textsize"
-        android:id="@+id/tv_manage_settings"
+        android:gravity="center_vertical"
+        android:id="@+id/tv_my_usergroup"
 
-        app:layout_constraintTop_toBottomOf="@id/tv_manage_calendar"
+        app:layout_constraintTop_toBottomOf="@id/tv_my_userinfo"
+        app:layout_constraintBottom_toTopOf="@id/tv_my_settings"
         app:layout_constraintLeft_toRightOf="@id/vgl_0.05"
         app:layout_constraintRight_toLeftOf="@id/vgl_0.95"
         />
 
     <TextView
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:drawableLeft="@drawable/ic_group_add_black_24dp"
         android:drawablePadding="10dp"
         android:text="更多设置"
         android:textSize="@dimen/item_manage_textsize"
-        android:id="@+id/tv_manage_invite"
+        android:gravity="center_vertical"
 
-        app:layout_constraintTop_toBottomOf="@id/tv_manage_settings"
+        android:id="@+id/tv_my_settings"
+
+        app:layout_constraintTop_toBottomOf="@id/tv_my_usergroup"
+        app:layout_constraintBottom_toTopOf="@id/tv_my_seedback"
         app:layout_constraintLeft_toRightOf="@id/vgl_0.05"
         app:layout_constraintRight_toLeftOf="@id/vgl_0.95"
         />
 
     <TextView
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:drawableLeft="@drawable/ic_exit_to_app_black_24dp"
         android:drawablePadding="10dp"
         android:text="意见反馈"
         android:textSize="@dimen/item_manage_textsize"
-        android:id="@+id/tv_manage_exit"
+        android:gravity="center_vertical"
 
-        app:layout_constraintTop_toBottomOf="@id/tv_manage_invite"
+        android:id="@+id/tv_my_seedback"
+
+        app:layout_constraintTop_toBottomOf="@id/tv_my_settings"
+        app:layout_constraintBottom_toTopOf="@id/hgl_0.75"
         app:layout_constraintLeft_toRightOf="@id/vgl_0.05"
         app:layout_constraintRight_toLeftOf="@id/vgl_0.95"
         />
