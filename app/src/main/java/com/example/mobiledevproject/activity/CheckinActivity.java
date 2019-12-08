@@ -1,31 +1,23 @@
 package com.example.mobiledevproject.activity;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.ListAdapter;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.content.Intent;
-import android.database.DataSetObserver;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.Build;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
-import android.os.Environment;
-import android.os.Message;
-import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Adapter;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageButton;
 import com.example.mobiledevproject.R;
-import com.example.mobiledevproject.adapter.BitmapAdapter;
+import com.example.mobiledevproject.Utility.GlideEngine;
+import com.example.mobiledevproject.adapter.PhotoAdapter;
 import com.example.mobiledevproject.model.MessageBean;
+import com.zhihu.matisse.Matisse;
+import com.zhihu.matisse.MimeType;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -40,22 +32,25 @@ import java.util.Date;
 import java.util.List;
 
 public class CheckinActivity extends AppCompatActivity {
+    private static final int REQUEST_CAMERA_CODE = 10;
+    private static final int REQUEST_PREVIEW_CODE = 20;
+    private static final int REQUEST_CODE_CHOOSE = 23;
     final static  String TAG = "CheckinActivity";
-    List<Bitmap> data;
+    List<String> imagePath;
     private MessageBean  messageBean;
     private ImageButton backIBtn;
     private Button sendBtn;
     private EditText contentET;
-
     private GridView imageGV;
+    PhotoAdapter photoAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_checkin);
         initView();
         loadData();
-        BitmapAdapter bitmapAdapter =  new BitmapAdapter(CheckinActivity.this,data);
-        imageGV.setAdapter(bitmapAdapter);
+        photoAdapter =  new PhotoAdapter(CheckinActivity.this,imagePath);
+        imageGV.setAdapter(photoAdapter);
     }
     protected void initView() {
         backIBtn = findViewById(R.id.checkin_back_ibtn);
@@ -63,15 +58,12 @@ public class CheckinActivity extends AppCompatActivity {
         contentET = findViewById(R.id.checkin_content_et);
         imageGV = findViewById(R.id.checkin_image_gv);
         sendBtn.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
-                String userId = "004";
+                String userId = "0011";
                 String content = contentET.getText().toString();
-                List<String> localImages = null;
-                List<Bitmap> onlineImages = null;
-                System.out.println(content);
-                System.out.println("=================hhhhhhhhhhhhhhhhhhh============");
+                List<String> localImages = imagePath;
+                List<String> onlineImages = null;
                 if (content == null && localImages == null) {
 
                 } else {
@@ -82,25 +74,19 @@ public class CheckinActivity extends AppCompatActivity {
                     messageBean =  new MessageBean(userId,content,localImages,onlineImages,time);
                     String path = userId;
                     try {
-
                         List<MessageBean> messageBeanList;
-                        System.out.println(getFilesDir());
-
                         String AbsolutePath = getFilesDir().toString();
-
                         File file = new File(AbsolutePath +"/"+ path);
                         if (file.exists()) {
                             FileInputStream fileInputStream = openFileInput(path);
                             ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
                             messageBeanList = (ArrayList)objectInputStream.readObject();
-                            System.out.println("++++++++++++++++++++++");
-                            System.out.println(messageBeanList.size());
                             fileInputStream.close();
                             objectInputStream.close();
                         } else {
                             messageBeanList = new ArrayList<>();
                         }
-                        messageBeanList.add(messageBean);
+                        messageBeanList.add(0,messageBean);
                         FileOutputStream fileOutputStream = openFileOutput(path, Context.MODE_PRIVATE);
                         ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
                         objectOutputStream.writeObject(messageBeanList);
@@ -108,13 +94,12 @@ public class CheckinActivity extends AppCompatActivity {
                         objectOutputStream.close();
                         System.out.println("=================hhhhhhhhhhhhhhhhhhh============");
                     } catch (FileNotFoundException e) {
-
+                        e.printStackTrace();
                     } catch (IOException e){
                         e.printStackTrace();
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-
                     Intent intent = new Intent(CheckinActivity.this,GroupActivity.class);
                     startActivity(intent);
                 }
@@ -127,19 +112,56 @@ public class CheckinActivity extends AppCompatActivity {
                 finish();
             }
         });
-
+        imageGV.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Matisse.from(CheckinActivity.this)
+                        .choose(MimeType.ofAll())
+                        .countable(true)
+                        .maxSelectable(6)
+//                        .addFilter(new GifSizeFilter(320, 320, 5 * Filter.K * Filter.K))
+//                        .gridExpectedSize(getResources().getDimensionPixelSize(R.dimen.grid_expected_size))
+                        .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
+                        .thumbnailScale(0.85f)
+                        .imageEngine(new GlideEngine())
+//                        .showPreview(false) // Default is `true`
+                        .forResult(REQUEST_CODE_CHOOSE);
+            }
+        });
 
     }
     protected void loadData() {
-        data =  new ArrayList<>();
-
-        System.out.println(Environment.getExternalStorageDirectory( ).getAbsolutePath());
-
-        String fileName1 = "/storage/emulated/0/Download/b1.png";
-        Bitmap bitmap1 = BitmapFactory.decodeFile(fileName1);
-        data.add(bitmap1);
-        String fileName2 = "/storage/emulated/0/Download/b2.png";
-        Bitmap bitmap2 = BitmapFactory.decodeFile(fileName2);
-        data.add(bitmap2);
+        imagePath =  new ArrayList<>();
+        imagePath.add("PHOTO_TAKING");
     }
+
+    @Override
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == REQUEST_CODE_CHOOSE && resultCode == RESULT_OK) {
+            List<String> paths = Matisse.obtainPathResult(data);
+            System.out.println(paths);
+            loadAdapter(paths);
+        }
+
+    }
+    private void loadAdapter(List<String> paths) {
+        if (imagePath!=null&& imagePath.size()>0){
+            imagePath.clear();
+        }
+        if (paths.contains("PHOTO_TAKING")){
+            paths.remove("PHOTO_TAKING");
+        }
+        paths.add("PHOTO_TAKING");
+        imagePath.addAll(paths);
+        System.out.println("********" + imagePath +"**********");
+        photoAdapter = new PhotoAdapter(CheckinActivity.this,imagePath);
+        imageGV.setAdapter(photoAdapter);
+
+    }
+
+
 }

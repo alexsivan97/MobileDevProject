@@ -17,14 +17,13 @@ import java.util.List;
 
 public class DynamicAdapter extends RecyclerView.Adapter<DynamicAdapter.ViewHolder> {
     private Context context;
-    private List<MessageBean> data;
+    private List<MessageBean> messageList;
     private LayoutInflater inflater;
-    private BitmapAdapter bitmapAdapter;
+    private PhotoAdapter photoAdapter;
 
-    public DynamicAdapter(Context context, List<MessageBean> data,BitmapAdapter bitmapAdapter) {
+    public DynamicAdapter(Context context, List<MessageBean> messageList) {
         this.context = context;
-        this.data = data;
-        this.bitmapAdapter = bitmapAdapter;
+        this.messageList = messageList;
         inflater = LayoutInflater.from(context);
     }
 
@@ -37,14 +36,25 @@ public class DynamicAdapter extends RecyclerView.Adapter<DynamicAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int position) {
-        viewHolder.content.setText(data.get(position).getContent());
-        viewHolder.images.setAdapter(bitmapAdapter);
-        viewHolder.time.setText(data.get(position).getTime());
+        viewHolder.content.setText(messageList.get(position).getContent());
+
+        //首先本地获取，本地获取失败从网上获取  。。逻辑不对之后再改
+        List<String> imagePaths = messageList.get(position).getLocalImagePath();
+        if( imagePaths == null){
+            imagePaths = messageList.get(position).getOnlineImagePath();
+        }
+        if(imagePaths != null && imagePaths.contains("PHOTO_TAKING"))
+            imagePaths.remove("PHOTO_TAKING");
+
+        photoAdapter = new PhotoAdapter(this.context,imagePaths);
+        System.out.println("+++++++++++++++++++++++++"+imagePaths+"+++++++++++");
+        viewHolder.images.setAdapter(photoAdapter);
+        viewHolder.time.setText(messageList.get(position).getTime());
     }
 
     @Override
     public int getItemCount() {
-        return data.size();
+        return messageList.size();
     }
 
 

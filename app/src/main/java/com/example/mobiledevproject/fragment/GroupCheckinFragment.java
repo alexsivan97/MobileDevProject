@@ -1,7 +1,5 @@
 package com.example.mobiledevproject.fragment;
 
-import android.content.Context;
-import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,15 +12,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mobiledevproject.R;
-import com.example.mobiledevproject.activity.GroupActivity;
-import com.example.mobiledevproject.adapter.BitmapAdapter;
+import com.example.mobiledevproject.adapter.PhotoAdapter;
 import com.example.mobiledevproject.adapter.DynamicAdapter;
 import com.example.mobiledevproject.interfaces.GetFragmentInfo;
 import com.example.mobiledevproject.model.MessageBean;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -78,7 +74,7 @@ public class GroupCheckinFragment extends Fragment implements GetFragmentInfo {
     }
 
     private void initDynamic(View view) {
-        String path = "004";
+        String path = "0011";
         try {
 
             String AbsolutePath= getContext().getFilesDir().toString();
@@ -91,13 +87,12 @@ public class GroupCheckinFragment extends Fragment implements GetFragmentInfo {
                 ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
                 dynamicData = (ArrayList)objectInputStream.readObject();
                 System.out.println(dynamicData.size());
-                List<Bitmap> data = null;
+                List<String> data = null;
                 System.out.println("=================1============");
                 fileInputStream.close();
                 objectInputStream.close();
 
-                BitmapAdapter bitmapAdapter = new BitmapAdapter(getContext(), data);
-                DynamicAdapter dynamicAdapter = new DynamicAdapter(getContext(), dynamicData, bitmapAdapter);
+                DynamicAdapter dynamicAdapter = new DynamicAdapter(getContext(), dynamicData);
                 RecyclerView recyclerView = view.findViewById(R.id.group_message_rv);
                 System.out.println("=================2============");
                 recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));

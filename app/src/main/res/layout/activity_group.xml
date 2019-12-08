@@ -99,21 +99,20 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:id="@+id/vp_checkin_contents"
-
         app:layout_constraintTop_toBottomOf="@id/tl_checkin_funcs"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/btn_checkin"
         app:layout_constraintLeft_toRightOf="@id/vgl_0.05"
         app:layout_constraintRight_toLeftOf="@id/vgl_0.95"
         >
-
-
-
     </androidx.viewpager.widget.ViewPager>
 
     <Button
         android:id="@+id/btn_checkin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="打卡"
+        android:textSize="28sp"
+        android:background="#388E8E"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         />

@@ -9,19 +9,25 @@ import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.mobiledevproject.R;
 
 import java.util.List;
 
-public class BitmapAdapter extends BaseAdapter {
+public class PhotoAdapter extends BaseAdapter {
     private Context context;
-    private List<Bitmap> data;
+    private List<String> data;
     private LayoutInflater inflater;
 
 
-    public BitmapAdapter(Context context, List<Bitmap> data) {
+    public PhotoAdapter(Context context, List<String> data) {
         this.context = context;
         this.data = data;
+        //将加号去掉
+        if(data != null &&data.size() == 7) {
+            data.remove(6);
+        }
         inflater = LayoutInflater.from(context);
     }
 
@@ -53,8 +59,19 @@ public class BitmapAdapter extends BaseAdapter {
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        viewHolder.imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-        viewHolder.imageView.setImageBitmap(data.get(position));
+
+        final String path=data.get(position);
+        if (path.equals("PHOTO_TAKING")){
+            viewHolder.imageView.setImageResource(R.drawable.ic_checkin_photo_taking_24dp);
+        }else {
+            RequestOptions options = new RequestOptions()
+                    .centerCrop();
+            System.out.println("============" + path +"=============");
+            Glide.with(context)
+                    .load(path)
+                    .apply(options)
+                    .into(viewHolder.imageView);
+        }
         return convertView;
     }
     private class ViewHolder {

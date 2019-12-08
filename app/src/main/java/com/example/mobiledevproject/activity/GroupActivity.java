@@ -1,34 +1,24 @@
 package com.example.mobiledevproject.activity;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.mobiledevproject.R;
-import com.example.mobiledevproject.adapter.BitmapAdapter;
 import com.example.mobiledevproject.adapter.ContentsVpAdapter;
-import com.example.mobiledevproject.adapter.DynamicAdapter;
 import com.example.mobiledevproject.fragment.GroupCheckinFragment;
 import com.example.mobiledevproject.fragment.IntroFragment;
 import com.example.mobiledevproject.fragment.ManageFragment;
 import com.example.mobiledevproject.interfaces.GetFragmentInfo;
 import com.example.mobiledevproject.model.GroupCreate;
-import com.example.mobiledevproject.model.MessageBean;
 import com.google.android.material.tabs.TabLayout;
 
-import java.io.BufferedInputStream;
-import java.io.FileInputStream;
-import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.List;
 
