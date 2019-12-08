@@ -1,5 +1,6 @@
 package com.example.mobiledevproject.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -64,14 +65,16 @@ public class CreateGroupActivity extends AppCompatActivity {
                 String url = "https://zxzx.applinzi.com/api/v1/auth/login";
 
                 //上传json格式数据
-                String jsonInfo= gson.toJson(user);
+                String userInfo= gson.toJson(user);
                 String groupInfo = gson.toJson(group);
 
+                String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1aWQiOjEsImV4cCI6MTU3NTgwODc4NiwiaWF0IjoxNTc1ODAxNTg2LCJuYmYiOjE1NzU4MDE1ODZ9.ej-usoW8f0ykYr4q0s8gAfnmUxps2SKOw5zuMvCpGTw";
 
-                Log.i(TAG, "onClick: "+jsonInfo);
+
+                Log.i(TAG, "onClick: "+userInfo);
                 Log.i(TAG, "onClick: "+groupInfo);
 
-                HttpUtil.postOkHttpRequest(url, jsonInfo, new Callback() {
+                HttpUtil.postOkHttpRequest(url, userInfo, new Callback() {
                     @Override
                     public void onFailure(Call call, IOException e) {
                         e.printStackTrace();
@@ -82,9 +85,12 @@ public class CreateGroupActivity extends AppCompatActivity {
                         String responseBody = response.body().string();
 
                         Log.i(TAG, "onResponse: "+ responseBody);
+
                         JsonObject jsonObject = (JsonObject)new JsonParser().parse(responseBody);
                         JsonObject data = jsonObject.get("data").getAsJsonObject();
+
                         String accessToken = data.get("accessToken").getAsString();
+
                         Log.i(TAG, "onResponse: "+accessToken);
 
 
@@ -99,10 +105,10 @@ public class CreateGroupActivity extends AppCompatActivity {
                 });
 
 
-//                Intent intent = new Intent();
-//                intent.putExtra("group_info", info);
-//                setResult(RESULT_OK, intent);
-//                finish();
+                Intent intent = new Intent();
+                intent.putExtra("group_info", info);
+                setResult(RESULT_OK, intent);
+                finish();
             }
         });
     }
