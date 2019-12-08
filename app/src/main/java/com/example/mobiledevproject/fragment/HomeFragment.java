@@ -111,11 +111,6 @@ public class HomeFragment extends Fragment {
         Log.i(TAG, "addGroupItem: list size " + infoList.size());
     }
 
-//    private void storeGroupInfo(GroupCreate createdGroup){
-//        editor = getActivity()
-//                .getSharedPreferences("group_list", Context.MODE_PRIVATE)
-//                .edit();
-//    }
 
 
     private void initRecycleView() {

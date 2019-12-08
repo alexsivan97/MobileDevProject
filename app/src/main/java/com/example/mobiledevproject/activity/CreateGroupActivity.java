@@ -12,11 +12,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.mobiledevproject.R;
 import com.example.mobiledevproject.model.Group;
 import com.example.mobiledevproject.model.GroupCreate;
-import com.example.mobiledevproject.model.User;
 import com.example.mobiledevproject.model.UserCreate;
 import com.example.mobiledevproject.util.HttpUtil;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 import java.io.IOException;
 
@@ -52,15 +53,23 @@ public class CreateGroupActivity extends AppCompatActivity {
         commitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+
                 GroupCreate info = getCreateInfo();
                 Group group = new Group(info);
+
+
+                //  这里用户信息和token都应该来自登录界面，现在模拟操作，我需要先拿到token
                 UserCreate user = new UserCreate("zx", "123");
                 String url = "https://zxzx.applinzi.com/api/v1/auth/login";
 
                 //上传json格式数据
-                Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
                 String jsonInfo= gson.toJson(user);
+                String groupInfo = gson.toJson(group);
+
+
                 Log.i(TAG, "onClick: "+jsonInfo);
+                Log.i(TAG, "onClick: "+groupInfo);
 
                 HttpUtil.postOkHttpRequest(url, jsonInfo, new Callback() {
                     @Override
@@ -71,7 +80,14 @@ public class CreateGroupActivity extends AppCompatActivity {
                     public void onResponse(Call call, Response response) throws IOException {
 
                         String responseBody = response.body().string();
+
                         Log.i(TAG, "onResponse: "+ responseBody);
+                        JsonObject jsonObject = (JsonObject)new JsonParser().parse(responseBody);
+                        JsonObject data = jsonObject.get("data").getAsJsonObject();
+                        String accessToken = data.get("accessToken").getAsString();
+                        Log.i(TAG, "onResponse: "+accessToken);
+
+
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
@@ -95,28 +111,5 @@ public class CreateGroupActivity extends AppCompatActivity {
         return new GroupCreate(nameEt.getText().toString(), descriptionEt.getText().toString());
     }
 
-    Runnable networkTask = new Runnable() {
-        @Override
-        public void run() {
-            String url = "https://zxzx.applinzi.com/api/v1/auth/login";
-            User user = new User("zx", "123");
-            //  传输数据的部分
 
-            //上传json格式数据
-            Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
-            String jsonInfo= gson.toJson(user);
-            HttpUtil.postOkHttpRequest(url, jsonInfo, new Callback() {
-                @Override
-                public void onFailure(Call call, IOException e) {
-                    e.printStackTrace();
-
-                }
-
-                @Override
-                public void onResponse(Call call, Response response) throws IOException {
-                    Log.i(TAG, "onResponse: "+response.body().string());
-                }
-            });
-        }
-    };
 }

@@ -1,24 +1,41 @@
 package com.example.mobiledevproject.model;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
 
 public class Group {
 
+    @Expose(serialize = false)
     private List<User> memberList;
+    @Expose(serialize = false)
     private int groupId;
+
+    @SerializedName("name")
     private String groupName;
+
+    @SerializedName("circleMasterId")
     private int masterId;
+
+    @SerializedName("desc")
     private String description;
 
+
     private String type;
-    private String rule;
+    private String checkRule;
+
+    private String startAt;
+    private String endAt;
 
     public Group(GroupCreate groupCreate){
         this.groupName = groupCreate.getGroupName();
         this.type = "default";
         this.description = groupCreate.getDescription();
-        this.rule = "";
+        this.checkRule = "";
         this.masterId = -1;
+        this.startAt = "-1";
+        this.endAt = "-1";
     }
 
     public List<User> getMemberList() {
@@ -69,11 +86,11 @@ public class Group {
         this.type = type;
     }
 
-    public String getRule() {
-        return rule;
+    public String getcheckRule() {
+        return checkRule;
     }
 
-    public void setRule(String rule) {
-        this.rule = rule;
+    public void setcheckRule(String checkRule) {
+        this.checkRule = checkRule;
     }
 }

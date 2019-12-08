@@ -87,8 +87,9 @@ public class GroupActivity extends AppCompatActivity {
 
     private void viewSetInfo(GroupCreate group) {
 
-//        nameTv.setText(group.getGroupName());
-        nameTv.setText("aa");
+        nameTv.setText(group.getGroupName());
+
+//        nameTv.setText("aa");
         //  此处成员数据要通过数据库读取
         memberNumTv.setText("成员10人");
 
