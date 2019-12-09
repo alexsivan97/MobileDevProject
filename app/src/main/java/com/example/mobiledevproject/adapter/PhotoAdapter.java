@@ -24,10 +24,6 @@ public class PhotoAdapter extends BaseAdapter {
     public PhotoAdapter(Context context, List<String> data) {
         this.context = context;
         this.data = data;
-        //将加号去掉
-        if(data != null &&data.size() == 7) {
-            data.remove(6);
-        }
         inflater = LayoutInflater.from(context);
     }
 
@@ -35,6 +31,10 @@ public class PhotoAdapter extends BaseAdapter {
     public int getCount() {
         if(data == null)
             return 0;
+        //处理图片满了之后的加号
+        if(data.size() == 7){
+            return data.size() - 1;
+        }
         return data.size();
     }
 

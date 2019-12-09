@@ -1,4 +1,4 @@
-package com.example.mobiledevproject.Utility;
+package com.example.mobiledevproject.util;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;

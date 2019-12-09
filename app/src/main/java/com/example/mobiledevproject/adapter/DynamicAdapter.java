@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.mobiledevproject.R;
 import com.example.mobiledevproject.model.MessageBean;
 
+import java.io.File;
 import java.util.List;
 
 public class DynamicAdapter extends RecyclerView.Adapter<DynamicAdapter.ViewHolder> {
@@ -39,13 +40,14 @@ public class DynamicAdapter extends RecyclerView.Adapter<DynamicAdapter.ViewHold
         viewHolder.content.setText(messageList.get(position).getContent());
 
         //首先本地获取，本地获取失败从网上获取  。。逻辑不对之后再改
-        List<String> imagePaths = messageList.get(position).getLocalImagePath();
-        if( imagePaths == null){
-            imagePaths = messageList.get(position).getOnlineImagePath();
+        List<String> localImagePaths = messageList.get(position).getLocalImagePath();
+        List<String> onlineImagePaths = messageList.get(position).getOnlineImagePath();
+        List<String> imagePaths = localImagePaths;
+        imagePaths = messageList.get(position).getLocalImagePath();
+        for(int i = 0;onlineImagePaths != null && i < imagePaths.size() - 1;++i) {
+            if(!new File(imagePaths.get(i)).exists())
+                imagePaths.set(i,onlineImagePaths.get(i));
         }
-        if(imagePaths != null && imagePaths.contains("PHOTO_TAKING"))
-            imagePaths.remove("PHOTO_TAKING");
-
         photoAdapter = new PhotoAdapter(this.context,imagePaths);
         System.out.println("+++++++++++++++++++++++++"+imagePaths+"+++++++++++");
         viewHolder.images.setAdapter(photoAdapter);

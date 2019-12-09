@@ -16,7 +16,7 @@ import java.util.List;
 public class Utility {
     private static final String TAG = "Utility";
 
-    private static boolean hasSpItem(Context context, String key){
+    public static boolean hasSpItem(Context context, String key){
         SharedPreferences sp = context.getSharedPreferences(StorageConfig.SP_NAME, Context.MODE_PRIVATE);
         if(sp.getString(key, null)!=null){
             return true;

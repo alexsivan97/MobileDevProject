@@ -16,7 +16,7 @@ import android.widget.ImageButton;
 
 
 import com.example.mobiledevproject.R;
-import com.example.mobiledevproject.Utility.GlideEngine;
+import com.example.mobiledevproject.util.GlideEngine;
 import com.example.mobiledevproject.adapter.PhotoAdapter;
 import com.example.mobiledevproject.model.MessageBean;
 import com.zhihu.matisse.Matisse;
@@ -103,6 +103,7 @@ public class CheckinActivity extends AppCompatActivity {
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
+                    imagePath.clear();
                     Intent intent = new Intent(CheckinActivity.this,GroupActivity.class);
                     startActivity(intent);
                 }
@@ -118,10 +119,11 @@ public class CheckinActivity extends AppCompatActivity {
         imageGV.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            if(position == imagePath.size() - 1){
                 Matisse.from(CheckinActivity.this)
                         .choose(MimeType.ofAll())
                         .countable(true)
-                        .maxSelectable(6)
+                        .maxSelectable(7 - imagePath.size())
 //                        .addFilter(new GifSizeFilter(320, 320, 5 * Filter.K * Filter.K))
 //                        .gridExpectedSize(getResources().getDimensionPixelSize(R.dimen.grid_expected_size))
                         .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
@@ -129,6 +131,11 @@ public class CheckinActivity extends AppCompatActivity {
                         .imageEngine(new GlideEngine())
 //                        .showPreview(false) // Default is `true`
                         .forResult(REQUEST_CODE_CHOOSE);
+
+            }else {
+                imagePath.remove(position);
+                loadAdapter();
+            }
             }
         });
 
@@ -146,21 +153,14 @@ public class CheckinActivity extends AppCompatActivity {
 
         if (requestCode == REQUEST_CODE_CHOOSE && resultCode == RESULT_OK) {
             List<String> paths = Matisse.obtainPathResult(data);
-            System.out.println(paths);
-            loadAdapter(paths);
+            imagePath.remove("PHOTO_TAKING");
+            imagePath.addAll(paths);
+            imagePath.add("PHOTO_TAKING");
+            loadAdapter();
         }
 
     }
-    private void loadAdapter(List<String> paths) {
-        if (imagePath!=null&& imagePath.size()>0){
-            imagePath.clear();
-        }
-        if (paths.contains("PHOTO_TAKING")){
-            paths.remove("PHOTO_TAKING");
-        }
-        paths.add("PHOTO_TAKING");
-        imagePath.addAll(paths);
-        System.out.println("********" + imagePath +"**********");
+    private void loadAdapter() {
         photoAdapter = new PhotoAdapter(CheckinActivity.this,imagePath);
         imageGV.setAdapter(photoAdapter);
 
