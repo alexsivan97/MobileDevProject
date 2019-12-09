@@ -1,17 +1,20 @@
 package com.example.mobiledevproject.activity;
 
-import androidx.appcompat.app.AppCompatActivity;
 
+import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageButton;
+
+
 import com.example.mobiledevproject.R;
 import com.example.mobiledevproject.Utility.GlideEngine;
 import com.example.mobiledevproject.adapter.PhotoAdapter;
@@ -69,7 +72,7 @@ public class CheckinActivity extends AppCompatActivity {
                 } else {
                     //获取提交时间作为文件名
                     Date date = new Date();
-                    SimpleDateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd :hh:mm");
+                    SimpleDateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd hh:mm");
                     String time = dateFormat.format(date);
                     messageBean =  new MessageBean(userId,content,localImages,onlineImages,time);
                     String path = userId;

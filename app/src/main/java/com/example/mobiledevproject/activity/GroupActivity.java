@@ -12,6 +12,9 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.example.mobiledevproject.R;
 import com.example.mobiledevproject.adapter.ContentsVpAdapter;
+
+import com.example.mobiledevproject.fragment.CircleFragment;
+
 import com.example.mobiledevproject.fragment.GroupCheckinFragment;
 import com.example.mobiledevproject.fragment.IntroFragment;
 import com.example.mobiledevproject.fragment.ManageFragment;
@@ -40,21 +43,24 @@ public class GroupActivity extends AppCompatActivity {
     TextView nameTv;
     @BindView(R.id.tv_checkin_membernum)
     TextView memberNumTv;
+    @BindView(R.id.btn_checkin)
+    Button checkinBtn;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group);
         ButterKnife.bind(this);
+
         viewPagerInit();
         tabInit();
         intentReceived();
         //===================测试====================
-        Button checkin = findViewById(R.id.btn_checkin);
-        checkin.setOnClickListener(new View.OnClickListener() {
+        checkinBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(GroupActivity.this,CheckinActivity.class);
+                Intent intent = new Intent(GroupActivity.this, CheckinActivity.class);
                 startActivity(intent);
             }
         });
@@ -67,6 +73,7 @@ public class GroupActivity extends AppCompatActivity {
         fragmentList = new ArrayList<>();
         fragmentList.add(IntroFragment.newInstance("简介", "内容"));
         fragmentList.add(GroupCheckinFragment.newInstance("圈子", "内容"));
+        fragmentList.add(CircleFragment.newInstance("动态", "内容"));
         fragmentList.add(ManageFragment.newInstance("管理", "内容"));
 
         contentsVp.setAdapter(new ContentsVpAdapter(getSupportFragmentManager(), fragmentList));
@@ -84,8 +91,9 @@ public class GroupActivity extends AppCompatActivity {
 
     private void viewSetInfo(GroupCreate group) {
 
-//        nameTv.setText(group.getGroupName());
-        nameTv.setText("aa");
+        nameTv.setText(group.getGroupName());
+
+//        nameTv.setText("aa");
         //  此处成员数据要通过数据库读取
         memberNumTv.setText("成员10人");
 

@@ -1,27 +1,18 @@
 package com.example.mobiledevproject.adapter;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
-import com.example.mobiledevproject.interfaces.GetFragmentInfo;
-
 import java.util.List;
 
-public class ContentsVpAdapter extends FragmentPagerAdapter {
+public class BodyVpAdapter extends FragmentPagerAdapter {
 
-    List<GetFragmentInfo> fragmentList;
-    public ContentsVpAdapter(FragmentManager fm, List<GetFragmentInfo> fragmentList){
+    List<Fragment> fragmentList;
+    public BodyVpAdapter(FragmentManager fm, List<Fragment> fragmentList){
         super(fm);
         this.fragmentList = fragmentList;
-    }
-
-    @Nullable
-    @Override
-    public CharSequence getPageTitle(int position) {
-        return fragmentList.get(position).getTitle();
     }
 
     @NonNull

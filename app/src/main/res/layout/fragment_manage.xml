@@ -45,7 +45,7 @@
         android:drawableLeft="@drawable/ic_date_range_black_24dp"
         android:drawablePadding="10dp"
         android:text="打卡日历"
-        android:textSize="@dimen/item_text_size"
+        android:textSize="@dimen/item_manage_textsize"
         android:id="@+id/tv_manage_calendar"
 
         app:layout_constraintTop_toBottomOf="@id/hgl_0.05"
@@ -60,7 +60,7 @@
         android:drawableLeft="@drawable/ic_settings_black_24dp"
         android:drawablePadding="10dp"
         android:text="修改设置"
-        android:textSize="@dimen/item_text_size"
+        android:textSize="@dimen/item_manage_textsize"
         android:id="@+id/tv_manage_settings"
 
         app:layout_constraintTop_toBottomOf="@id/tv_manage_calendar"
@@ -74,7 +74,7 @@
         android:drawableLeft="@drawable/ic_group_add_black_24dp"
         android:drawablePadding="10dp"
         android:text="邀请成员"
-        android:textSize="@dimen/item_text_size"
+        android:textSize="@dimen/item_manage_textsize"
         android:id="@+id/tv_manage_invite"
 
         app:layout_constraintTop_toBottomOf="@id/tv_manage_settings"
@@ -88,7 +88,7 @@
         android:drawableLeft="@drawable/ic_exit_to_app_black_24dp"
         android:drawablePadding="10dp"
         android:text="退出圈子"
-        android:textSize="@dimen/item_text_size"
+        android:textSize="@dimen/item_manage_textsize"
         android:id="@+id/tv_manage_exit"
 
         app:layout_constraintTop_toBottomOf="@id/tv_manage_invite"
