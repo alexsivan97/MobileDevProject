@@ -12,11 +12,14 @@ import androidx.viewpager.widget.ViewPager;
 import com.example.mobiledevproject.R;
 import com.example.mobiledevproject.adapter.BodyVpAdapter;
 import com.example.mobiledevproject.adapter.ListRcvAdapter;
+import com.example.mobiledevproject.config.StorageConfig;
+import com.example.mobiledevproject.config.WebConfig;
 import com.example.mobiledevproject.fragment.ExploreFragment;
 import com.example.mobiledevproject.fragment.HomeFragment;
 import com.example.mobiledevproject.fragment.MyFragment;
 import com.example.mobiledevproject.model.GroupCreate;
-import com.example.mobiledevproject.model.User;
+import com.example.mobiledevproject.model.UserCreate;
+import com.example.mobiledevproject.util.Utility;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
@@ -32,7 +35,7 @@ public class HomeActivity extends AppCompatActivity {
     private static final String TAG = "HomeActivity";
 
     //  来自登录界面的信息，这里先写成静态数据
-    private static User user;
+    public UserCreate user;
 
 
     ListRcvAdapter adapter;
@@ -49,6 +52,7 @@ public class HomeActivity extends AppCompatActivity {
     MenuItem menuItem;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,10 +66,14 @@ public class HomeActivity extends AppCompatActivity {
     }
 
 
+    //  目前是静态实现
     private void userInfoInit(){
         //  从intent中读取数据
-        user = new User("zx", "123");
-        user.setToken("");
+        user = new UserCreate("zx", "123");
+//        user.setToken("");
+
+        //  从intent中读取token
+        Utility.setData(HomeActivity.this, StorageConfig.SP_KEY_TOKEN, WebConfig.TOKEN);
 
     }
 

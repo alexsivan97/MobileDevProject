@@ -9,14 +9,14 @@ import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 
 import com.example.mobiledevproject.R;
-import com.example.mobiledevproject.model.User;
+import com.example.mobiledevproject.model.UserCreate;
 
 import butterknife.BindView;
 
 
 public class MyFragment extends Fragment {
 
-    User user;
+    UserCreate user;
     @BindView(R.id.tv_my_username)
     TextView tvMyUsername;
     @BindView(R.id.tv_my_userdescription)
@@ -27,7 +27,7 @@ public class MyFragment extends Fragment {
     }
 
 
-    public static MyFragment newInstance(User user) {
+    public static MyFragment newInstance(UserCreate user) {
         MyFragment fragment = new MyFragment();
         fragment.user = user;
         return fragment;

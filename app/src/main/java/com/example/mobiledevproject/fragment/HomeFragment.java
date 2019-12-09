@@ -32,8 +32,7 @@ public class HomeFragment extends Fragment {
 
     private static final String TAG = "HomeFragment";
     Unbinder unbinder;
-    private static final String SP_NAME = "sp_group_list";
-    private static final String SP_GROUP_LIST_KEY = "group_list";
+    public static final String SP_GROUP_LIST_KEY = "group_list";
 
     ListRcvAdapter adapter;
     List<GroupCreate> infoList;
@@ -46,7 +45,6 @@ public class HomeFragment extends Fragment {
     RecyclerView listRcv;
 
     public HomeFragment() {
-        // Required empty public constructor
     }
 
     public static HomeFragment newInstance() {
@@ -65,8 +63,6 @@ public class HomeFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         unbinder = ButterKnife.bind(this, view);
-
-        // Inflate the layout for this fragment
         return view;
     }
 
@@ -77,19 +73,16 @@ public class HomeFragment extends Fragment {
         dataInit();
         initRecycleView();
         viewSetOnClick();
-
     }
 
     private void dataInit() {
 
-        if(Utility.hasSpItem(getContext(), SP_NAME, SP_GROUP_LIST_KEY)){
-            infoList = Utility.getDataList(getContext(), SP_NAME, SP_GROUP_LIST_KEY, GroupCreate.class);
+        if(Utility.hasSpItem(getContext(), SP_GROUP_LIST_KEY)){
+            infoList = Utility.getDataList(getContext(), SP_GROUP_LIST_KEY, GroupCreate.class);
         } else {
             //  此处应该从数据库中加载已经加入的小组
             infoList = new ArrayList<GroupCreate>();
         }
-
-
     }
 
     private void viewSetOnClick() {
@@ -105,13 +98,11 @@ public class HomeFragment extends Fragment {
 
     private void addGroupItem(GroupCreate createdGroup) {
         adapter.addData(createdGroup, infoList.size());
-        Utility.setDataList(getContext(), "sp_group_list", "group_list", infoList);
+        Utility.setDataList(getContext(), "group_list", infoList);
 
         Log.i(TAG, "addGroupItem: add an item");
         Log.i(TAG, "addGroupItem: list size " + infoList.size());
     }
-
-
 
     private void initRecycleView() {
         //  定义一个线性布局管理器
@@ -120,7 +111,6 @@ public class HomeFragment extends Fragment {
         listRcv.setLayoutManager(manager);
         //  设置adapter
         adapter = new ListRcvAdapter(getContext(), infoList);
-
         //  添加adapter
         listRcv.setAdapter(adapter);
         //  添加动画
@@ -135,7 +125,6 @@ public class HomeFragment extends Fragment {
                 if (resultCode == getActivity().RESULT_OK) {
                     GroupCreate createdGroup = (GroupCreate) data.getSerializableExtra("group_info");
                     Log.i(TAG, "onActivityResult: " + createdGroup.getGroupName());
-
                     //  新圈子信息添加到列表
                     addGroupItem(createdGroup);
                     //  刷新界面

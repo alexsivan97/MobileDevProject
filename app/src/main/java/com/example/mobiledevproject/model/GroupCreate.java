@@ -7,17 +7,39 @@ public class GroupCreate implements Serializable {
     private String groupName;
     private int groupId;
     private String description;
-    private User founder;
+    private User master;
+    private String startAt;
+    private String endAt;
+
+    public GroupCreate(){
+
+    }
 
     public GroupCreate(String groupName, String description, User founder){
         this.groupName = groupName;
         this.description = description;
-        this.founder = founder;
+        this.master = founder;
     }
 
     public GroupCreate(String groupName, String description){
         this.groupName = groupName;
         this.description = description;
+    }
+
+    public String getStartAt() {
+        return startAt;
+    }
+
+    public void setStartAt(String startAt) {
+        this.startAt = startAt;
+    }
+
+    public String getEndAt() {
+        return endAt;
+    }
+
+    public void setEndAt(String endAt) {
+        this.endAt = endAt;
     }
 
     public String getGroupName() {
@@ -44,12 +66,12 @@ public class GroupCreate implements Serializable {
         this.description = description;
     }
 
-    public User getFounder() {
-        return founder;
+    public User getMaster() {
+        return master;
     }
 
-    public void setFounder(User founder) {
-        this.founder = founder;
+    public void setMaster(User founder) {
+        this.master = founder;
     }
 
 

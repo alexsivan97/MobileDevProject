@@ -3,7 +3,9 @@ package com.example.mobiledevproject.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class UserCreate {
+import java.io.Serializable;
+
+public class UserCreate implements Serializable {
 
     @Expose(serialize=false)
     private int userId;

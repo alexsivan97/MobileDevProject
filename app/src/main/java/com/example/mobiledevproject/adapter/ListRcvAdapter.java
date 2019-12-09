@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mobiledevproject.R;
 import com.example.mobiledevproject.activity.GroupActivity;
-import com.example.mobiledevproject.activity.GroupActivity;
 import com.example.mobiledevproject.model.GroupCreate;
 import com.google.android.material.card.MaterialCardView;
 
@@ -35,7 +34,6 @@ public class ListRcvAdapter extends RecyclerView.Adapter<ListRcvAdapter.GroupVie
     @Override
     public GroupViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.item_group, parent, false);
-
 
         return new GroupViewHolder(view);
     }
@@ -59,9 +57,6 @@ public class ListRcvAdapter extends RecyclerView.Adapter<ListRcvAdapter.GroupVie
                 context.startActivity(intent);
             }
         });
-
-
-
     }
 
     @Override

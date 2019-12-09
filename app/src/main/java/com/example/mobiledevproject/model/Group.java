@@ -41,8 +41,8 @@ public class Group {
         this.description = groupCreate.getDescription();
         this.checkRule = "";
         this.masterId = -1;
-        this.startAt = "-1";
-        this.endAt = "-1";
+        this.startAt = groupCreate.getStartAt();
+        this.endAt = groupCreate.getEndAt();
     }
 
     public List<User> getMemberList() {

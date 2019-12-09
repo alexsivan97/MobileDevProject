@@ -25,10 +25,19 @@
     <androidx.constraintlayout.widget.Guideline
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:id="@+id/vgl_divide_btn_tv"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.25"
+        />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:id="@+id/vgl_0.05"
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.05"
         />
+
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="0dp"
@@ -61,6 +70,7 @@
         app:layout_constraintTop_toBottomOf="@id/til_cg_name"
         app:layout_constraintLeft_toRightOf="@id/vgl_0.05"
         app:layout_constraintRight_toLeftOf="@id/vgl_0.95"
+
         >
 
         <EditText
@@ -71,20 +81,64 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
-
-
-
-    <TimePicker
+    <Button
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-
+        android:id="@+id/btn_cg_startat"
+        android:text="开始时间"
 
         app:layout_constraintTop_toBottomOf="@id/til_cg_description"
-        app:layout_constraintLeft_toRightOf="@id/vgl_0.05"
-        app:layout_constraintRight_toLeftOf="@id/vgl_0.95"
-        >
+        app:layout_constraintLeft_toLeftOf="@id/vgl_0.05"
+        app:layout_constraintRight_toLeftOf="@id/vgl_divide_btn_tv"
+        />
 
-    </TimePicker>
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_cg_startat"
+        tools:text="10：00"
+
+        app:layout_constraintLeft_toRightOf="@id/btn_cg_startat"
+        app:layout_constraintRight_toLeftOf="@id/vgl_0.95"
+        app:layout_constraintBaseline_toBaselineOf="@id/btn_cg_startat"
+        />
+
+    <Button
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn_cg_endat"
+        android:text="结束时间"
+
+        app:layout_constraintTop_toBottomOf="@id/btn_cg_startat"
+        app:layout_constraintLeft_toLeftOf="@id/vgl_0.05"
+        app:layout_constraintRight_toLeftOf="@id/vgl_divide_btn_tv"
+        />
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_cg_endat"
+        tools:text="11：00"
+
+        app:layout_constraintLeft_toRightOf="@id/btn_cg_endat"
+        app:layout_constraintRight_toLeftOf="@id/vgl_0.95"
+        app:layout_constraintTop_toBottomOf="@id/tv_cg_startat"
+        app:layout_constraintBaseline_toBaselineOf="@id/btn_cg_endat"
+        />
+
+
+
+    <!--<TimePicker-->
+        <!--android:layout_width="0dp"-->
+        <!--android:layout_height="wrap_content"-->
+
+
+        <!--app:layout_constraintTop_toBottomOf="@id/til_cg_description"-->
+        <!--app:layout_constraintLeft_toRightOf="@id/vgl_0.05"-->
+        <!--app:layout_constraintRight_toLeftOf="@id/vgl_0.95"-->
+        <!--&gt;-->
+
+    <!--</TimePicker>-->
     
     <Button
         android:layout_width="0dp"
@@ -95,6 +149,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toRightOf="@id/vgl_0.05"
         app:layout_constraintRight_toLeftOf="@id/vgl_0.95"
+
         />
 
     
