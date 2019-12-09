@@ -48,9 +48,11 @@ public class DynamicAdapter extends RecyclerView.Adapter<DynamicAdapter.ViewHold
             if(!new File(imagePaths.get(i)).exists())
                 imagePaths.set(i,onlineImagePaths.get(i));
         }
+
         photoAdapter = new PhotoAdapter(this.context,imagePaths);
         System.out.println("+++++++++++++++++++++++++"+imagePaths+"+++++++++++");
         viewHolder.images.setAdapter(photoAdapter);
+
         viewHolder.time.setText(messageList.get(position).getTime());
     }
 
