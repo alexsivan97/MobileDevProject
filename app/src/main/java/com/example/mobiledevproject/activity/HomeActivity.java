@@ -14,7 +14,6 @@ import com.example.mobiledevproject.R;
 import com.example.mobiledevproject.adapter.BodyVpAdapter;
 import com.example.mobiledevproject.adapter.ListRcvAdapter;
 import com.example.mobiledevproject.config.StorageConfig;
-import com.example.mobiledevproject.config.WebConfig;
 import com.example.mobiledevproject.fragment.ExploreFragment;
 import com.example.mobiledevproject.fragment.HomeFragment;
 import com.example.mobiledevproject.fragment.MyFragment;
@@ -52,8 +51,6 @@ public class HomeActivity extends AppCompatActivity {
 
     MenuItem menuItem;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,13 +67,13 @@ public class HomeActivity extends AppCompatActivity {
     //  目前是静态实现
     private void userInfoInit(){
         //  从intent中读取数据
-        user = new UserCreate("zx", "123");
-        Intent intent = new Intent();
-//        UserCreate user = (UserCreate)intent.getSerializableExtra("userinfo");
-//        Log.i(TAG, "userInfoInit: "+user.getUserName());
-//        user.setToken("");
+        Intent intent = getIntent();
+        user = (UserCreate)intent.getSerializableExtra("user_info");
+        String token = intent.getStringExtra("token");
+        Log.i(TAG, "userInfoInit: "+token);
+        Log.i(TAG, "userInfoInit: "+user.getUserName());
         //  从intent中读取token
-        Utility.setData(HomeActivity.this, StorageConfig.SP_KEY_TOKEN, WebConfig.TOKEN);
+        Utility.setData(HomeActivity.this, StorageConfig.SP_KEY_TOKEN, token);
 
     }
 
@@ -90,9 +87,7 @@ public class HomeActivity extends AppCompatActivity {
         bodyVp.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
             }
-
             @Override
             public void onPageSelected(int position) {
                 //  让底部按钮随着页面的滑动一起变化

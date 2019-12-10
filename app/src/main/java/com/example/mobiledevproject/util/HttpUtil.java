@@ -48,6 +48,18 @@ public class HttpUtil {
         okHttpClient.newCall(request).enqueue(callback);
     }
 
+    public static void postRequestWithToken(String address, String token, String jsonInfo, Callback callback){
+        OkHttpClient okHttpClient = new OkHttpClient();
+        RequestBody requestBody = RequestBody.create(MediaType
+                .parse("application/json; charset=utf-8"), jsonInfo);
+        Request request = new Request.Builder().url(address)
+                .addHeader(WebConfig.TOKEN_KEY, WebConfig.TOKEN_VALUE_PRE+token)
+                .post(requestBody)
+                .build();
+        okHttpClient.newCall(request).enqueue(callback);
+    }
+
+
     public static void getToken(UserCreate user, Handler handler){
         Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
         String jsonInfo = gson.toJson(user);

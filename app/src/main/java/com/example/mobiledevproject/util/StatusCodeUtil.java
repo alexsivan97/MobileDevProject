@@ -7,11 +7,10 @@ public class StatusCodeUtil {
 
     public static boolean isTokenError(int status){
         if(status==403 || status==401){
-            System.out.println("token error");
             //  之后应该重新加载一次token
-            return false;
-        } else {
             return true;
+        } else {
+            return false;
         }
     }
 

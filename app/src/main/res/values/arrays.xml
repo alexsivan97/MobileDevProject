@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="group_types">
+        <item>作息打卡</item>
+        <item>学习打卡</item>
+        <item>运动打卡</item>
+        <item>其他类型</item>
+    </string-array>
+</resources>

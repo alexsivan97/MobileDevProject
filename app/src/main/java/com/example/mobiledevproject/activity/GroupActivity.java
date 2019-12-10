@@ -46,6 +46,8 @@ public class GroupActivity extends AppCompatActivity {
     @BindView(R.id.btn_checkin)
     Button checkinBtn;
 
+    public GroupCreate group;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,8 +57,8 @@ public class GroupActivity extends AppCompatActivity {
 
         viewPagerInit();
         tabInit();
-        intentReceived();
-        //===================测试====================
+        groupInit();
+
         checkinBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -65,15 +67,14 @@ public class GroupActivity extends AppCompatActivity {
             }
         });
 
-        //====================测试=====================
     }
 
 
     private void viewPagerInit() {
         fragmentList = new ArrayList<>();
         fragmentList.add(IntroFragment.newInstance("简介", "内容"));
-        fragmentList.add(GroupCheckinFragment.newInstance("圈子", "内容"));
-        fragmentList.add(CircleFragment.newInstance("动态", "内容"));
+        fragmentList.add(GroupCheckinFragment.newInstance("动态", "内容"));
+        fragmentList.add(CircleFragment.newInstance("圈子", "内容"));
         fragmentList.add(ManageFragment.newInstance("管理", "内容"));
 
         contentsVp.setAdapter(new ContentsVpAdapter(getSupportFragmentManager(), fragmentList));
@@ -83,9 +84,15 @@ public class GroupActivity extends AppCompatActivity {
         funcsTl.setupWithViewPager(contentsVp);
     }
 
+    private void groupInit(){
+        if(group==null){
+            intentReceived();
+        }
+    }
+
     private void intentReceived() {
         Intent intent = getIntent();
-        GroupCreate group = (GroupCreate) intent.getSerializableExtra("group_info");
+        group = (GroupCreate) intent.getSerializableExtra("group_info");
         viewSetInfo(group);
     }
 

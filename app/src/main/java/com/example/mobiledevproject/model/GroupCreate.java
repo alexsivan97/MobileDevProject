@@ -1,29 +1,66 @@
 package com.example.mobiledevproject.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 
 public class GroupCreate implements Serializable {
 
+    @SerializedName("name")
     private String groupName;
-    private int groupId;
-    private String description;
-    private User master;
+    private String type = "";
     private String startAt;
     private String endAt;
+
+    @SerializedName("desc")
+    private String description;
+    private String checkRule = "";
+
+    @SerializedName("circleMasterId")
+    private int masterId;
+
+    @Override
+    public String toString() {
+        return "GroupCreate{" +
+                "groupName='" + groupName + '\'' +
+                ", description='" + description + '\'' +
+                ", masterId=" + masterId +
+                ", startAt='" + startAt + '\'' +
+                ", endAt='" + endAt + '\'' +
+                '}';
+    }
 
     public GroupCreate(){
 
     }
 
-    public GroupCreate(String groupName, String description, User founder){
-        this.groupName = groupName;
-        this.description = description;
-        this.master = founder;
-    }
-
     public GroupCreate(String groupName, String description){
         this.groupName = groupName;
         this.description = description;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getCheckRule() {
+        return checkRule;
+    }
+
+    public void setCheckRule(String checkRule) {
+        this.checkRule = checkRule;
+    }
+
+    public int getMasterId() {
+        return masterId;
+    }
+
+    public void setMasterId(int masterId) {
+        this.masterId = masterId;
     }
 
     public String getStartAt() {
@@ -50,14 +87,6 @@ public class GroupCreate implements Serializable {
         this.groupName = groupName;
     }
 
-    public int getGroupId() {
-        return groupId;
-    }
-
-    public void setGroupId(int groupId) {
-        this.groupId = groupId;
-    }
-
     public String getDescription() {
         return description;
     }
@@ -66,13 +95,7 @@ public class GroupCreate implements Serializable {
         this.description = description;
     }
 
-    public User getMaster() {
-        return master;
-    }
 
-    public void setMaster(User founder) {
-        this.master = founder;
-    }
 
 
 }

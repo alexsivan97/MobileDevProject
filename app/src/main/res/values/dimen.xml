@@ -3,6 +3,8 @@
 
     <dimen name="item_manage_textsize">25dp</dimen>
     <dimen name="item_my_textsize">25dp</dimen>
+    <dimen name="item_intro_label_textsize">15dp</dimen>
+    <dimen name="item_intro_content_textsize">25dp</dimen>
     <dimen name="btn_between">20dp</dimen>
 
 </resources>

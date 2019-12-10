@@ -13,6 +13,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.mobiledevproject.R;
+import com.example.mobiledevproject.config.API;
 import com.example.mobiledevproject.model.UserCreate;
 import com.example.mobiledevproject.util.HttpUtil;
 import com.example.mobiledevproject.util.StatusCodeUtil;
@@ -68,19 +69,15 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent it_login_to_register = new Intent(LoginActivity.this, RegisterActivity.class);
                 startActivity(it_login_to_register);
-
             }
-
         });
 
         //跳转到找回密码界面
         tv_forget_password.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
                 Intent it_login_to_retrievepassword = new Intent(LoginActivity.this, RetrievePwdActivity.class);
                 startActivity(it_login_to_retrievepassword);
-
             }
 
         });
@@ -91,25 +88,19 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 UserCreate info = getUserInfo();
-                String url = "https://zxzx.applinzi.com/api/v1/auth/login";
-
                 //上传json格式数据
                 Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
                 String jsonInfo = gson.toJson(info);
-                Log.i(TAG, "onClick: " + jsonInfo);
-
-
-                HttpUtil.postOkHttpRequest(url, jsonInfo, new Callback() {
+                HttpUtil.postOkHttpRequest(API.LOGIN, jsonInfo, new Callback() {
                     @Override
                     public void onFailure(Call call, IOException e) {
 
                         e.printStackTrace();
-                        Log.i(TAG, "Login_PostRequest_Failure");
+                        Log.i(TAG, "onFailure: 网络请求错误");
 
                     }
                     @Override
                     public void onResponse(Call call, Response response) throws IOException {
-
                         String responseBody = response.body().string();
                         Log.i(TAG, "onResponse: " + responseBody);
 
@@ -126,15 +117,15 @@ public class LoginActivity extends AppCompatActivity {
                                         //登录成功后跳转到HomeActivity，通过intent把user和token的信息传过来，user用类传递，token用string
                                         Intent it_login_to_home = new Intent(LoginActivity.this, HomeActivity.class);
                                         JsonObject data = jsonObject.get("data").getAsJsonObject();
-
                                         String token = data.get("accessToken").getAsString();
-                                        Log.i(TAG, "token:" + token);
-                                        it_login_to_home.putExtra("token", token);
                                         int userID = data.get("userID").getAsInt();
-                                        Log.i(TAG, "userID:" + userID);
-//
-                                        UserCreate user = new UserCreate(userID, username, password);
-                                        it_login_to_home.putExtra("userinfo", user);
+                                        info.setUserId(userID);
+
+                                        it_login_to_home.putExtra("token", token);
+
+                                        it_login_to_home.putExtra("user_info", info);
+                                        Log.i(TAG, "run: "+info.toString());
+
                                         startActivity(it_login_to_home);
                                     }
                                 });
@@ -151,7 +142,10 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private UserCreate getUserInfo() {
-        return new UserCreate(et_username.getText().toString(), et_password.getText().toString());
+        UserCreate userCreate = new UserCreate();
+        userCreate.setUserName(et_username.getText().toString());
+        userCreate.setPassword(et_password.getText().toString());
+        return userCreate;
     }
 
 }

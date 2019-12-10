@@ -18,7 +18,7 @@ public class User {
     @SerializedName("password")
     private String password;
 
-    private String token;
+
 
     public User(String userName, String password){
         this.userName = userName;
@@ -53,11 +53,4 @@ public class User {
         this.password = password;
     }
 
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
-    }
 }

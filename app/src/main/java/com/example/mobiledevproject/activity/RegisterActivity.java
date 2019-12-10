@@ -57,8 +57,6 @@ public class RegisterActivity extends AppCompatActivity {
     private void viewSetOnClick(){
         String username=et_username.getText().toString();
         String password=et_password.getText().toString();
-
-
         tv_serviceagreement.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -68,7 +66,6 @@ public class RegisterActivity extends AppCompatActivity {
             }
 
         });
-
 
         //注册按钮事件响应
         bt_submit_register.setOnClickListener(new View.OnClickListener() {
@@ -107,7 +104,6 @@ public class RegisterActivity extends AppCompatActivity {
                                     public void run() {
                                         Log.i(TAG, "run: 注册成功");
                                         Intent it_reg_to_login = new Intent(RegisterActivity.this, LoginActivity.class);
-//
                                         startActivity(it_reg_to_login);
                                     }
                                 });
@@ -117,37 +113,6 @@ public class RegisterActivity extends AppCompatActivity {
                         } else {
                             Log.i(TAG, "onResponse: 响应内容错误");
                         }
-
-//                        JsonObject jsonObject = (JsonObject) new JsonParser().parse(responseBody);
-//                        int status = jsonObject.get("status").getAsInt();
-//                        Log.i(TAG, "status:" + status);
-//
-//
-//                        if (status == 1) {
-//                            runOnUiThread(new Runnable() {
-//                                @Override
-//                                public void run() {
-//                                    Toast.makeText(RegisterActivity.this, "注册成功",
-//                                            Toast.LENGTH_SHORT).show();
-//
-//                                }
-//                            });
-//                            Intent it_register_to_login = new Intent(RegisterActivity.this, LoginActivity.class);
-//                            startActivity(it_register_to_login);
-//                        }
-//
-//                        else if(status==0){
-//                            runOnUiThread(new Runnable() {
-//                                @Override
-//                                public void run() {
-//                                    String errMsg =jsonObject.get("errMsg").getAsString();
-//                                    Toast.makeText(RegisterActivity.this, errMsg,
-//                                            Toast.LENGTH_SHORT).show();
-//                                }
-//                            });
-//                        }
-
-
                     }
                 });
             }
