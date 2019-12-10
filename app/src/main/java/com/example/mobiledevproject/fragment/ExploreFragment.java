@@ -1,13 +1,14 @@
 package com.example.mobiledevproject.fragment;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -22,8 +23,8 @@ import com.example.mobiledevproject.config.API;
 import com.example.mobiledevproject.config.StorageConfig;
 import com.example.mobiledevproject.model.GroupCreate;
 import com.example.mobiledevproject.model.UserCreate;
-import com.example.mobiledevproject.util.StatusCodeUtil;
 import com.example.mobiledevproject.util.HttpUtil;
+import com.example.mobiledevproject.util.StatusCodeUtil;
 import com.example.mobiledevproject.util.Utility;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -106,12 +107,13 @@ public class ExploreFragment extends Fragment {
         }
         infoList = new ArrayList<>();
 
-
         //  从数据库中读取groups
         String address = API.CIRCLE;
         String responsestr;
 
-        UserCreate currentUser = ((HomeActivity) getActivity()).user;
+        //  user信息
+        final UserCreate currentUser = ((HomeActivity) getActivity()).user;
+        //  本地存储的token信息
         String token = Utility.getData(getContext(), StorageConfig.SP_KEY_TOKEN);
         HttpUtil.getRequestWithToken(address, token, new Callback() {
             @Override
@@ -122,10 +124,11 @@ public class ExploreFragment extends Fragment {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 String responseBody = response.body().string();
-
                 Log.i(TAG, "onResponse: " + responseBody);
-                JsonObject jsonObject = (JsonObject)new JsonParser().parse(responseBody);
-                try {
+                JsonObject jsonObject;
+
+                //  判断是否得到正确的请求
+                if((jsonObject=StatusCodeUtil.isNormalResponse(responseBody))!=null){
                     int status = jsonObject.get("status").getAsInt();
                     if(StatusCodeUtil.isNormalStatus(status)){
                         getActivity().runOnUiThread(new Runnable() {
@@ -137,27 +140,41 @@ public class ExploreFragment extends Fragment {
                     } else {
                         //  如果token失效，重新申请一个
                         if(StatusCodeUtil.isTokenError(status)){
-//                            String token = HttpUtil.updateToken(currentUser);
-//                            Utility.setData(getContext(), StorageConfig.SP_KEY_TOKEN, token);
+                            Log.i(TAG, "onResponse: "+"token失效，已经重新生成");
+                            HttpUtil.getToken(currentUser, handler);
                         }
-                        getActivity().runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                Toast.makeText(getContext(), "请重试", Toast.LENGTH_SHORT).show();
-                            }
-                        });
                     }
-
-                } catch (Exception e){
+                } else {
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            Toast.makeText(getContext(), "网络响应错误，请重试", Toast.LENGTH_SHORT).show();
+                            Log.i(TAG, "run: "+"网络请求错误");
                         }
                     });
                 }
+
             }
         });
+    }
+
+    private Handler handler = new Handler(){
+        public void handleMessage(Message msg){
+            super.handleMessage(msg);
+            switch (msg.what){
+                case -1:
+                    Log.i(TAG, "handleMessage: "+(String)msg.obj);
+                    break;
+                case 1:
+                    String token = (String)msg.obj;
+                    updateToken(token);
+                    break;
+            }
+        }
+    };
+
+
+    public void updateToken(String token){
+        Utility.setData(getContext(), StorageConfig.SP_KEY_TOKEN, token);
     }
 
     public void parseGroupList(String responseBody){

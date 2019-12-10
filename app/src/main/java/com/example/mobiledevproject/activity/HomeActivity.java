@@ -1,5 +1,6 @@
 package com.example.mobiledevproject.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -70,8 +71,10 @@ public class HomeActivity extends AppCompatActivity {
     private void userInfoInit(){
         //  从intent中读取数据
         user = new UserCreate("zx", "123");
+        Intent intent = new Intent();
+//        UserCreate user = (UserCreate)intent.getSerializableExtra("userinfo");
+//        Log.i(TAG, "userInfoInit: "+user.getUserName());
 //        user.setToken("");
-
         //  从intent中读取token
         Utility.setData(HomeActivity.this, StorageConfig.SP_KEY_TOKEN, WebConfig.TOKEN);
 

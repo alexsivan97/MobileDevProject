@@ -1,11 +1,6 @@
 package com.example.mobiledevproject.activity;
 
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
@@ -14,17 +9,20 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
-
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageButton;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.example.mobiledevproject.R;
-import com.example.mobiledevproject.util.GlideEngine;
 import com.example.mobiledevproject.adapter.PhotoAdapter;
 import com.example.mobiledevproject.model.MessageBean;
+import com.example.mobiledevproject.util.GlideEngine;
 import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
 
@@ -148,6 +146,7 @@ public class CheckinActivity extends AppCompatActivity {
 
     }
     protected void loadData() {
+
         imagePath =  new ArrayList<>();
         imagePath.add("PHOTO_TAKING");
         if (ContextCompat.checkSelfPermission(CheckinActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {

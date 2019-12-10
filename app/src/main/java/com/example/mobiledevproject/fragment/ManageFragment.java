@@ -15,18 +15,12 @@ import butterknife.Unbinder;
 
 
 public class ManageFragment extends Fragment implements GetFragmentInfo {
-
-
-
     Unbinder unbinder;
     String title, content;
 
-
     public ManageFragment() {
-        // Required empty public constructor
     }
 
-    //  单例模式
     public static ManageFragment newInstance(String title, String content) {
         ManageFragment fragment = new ManageFragment();
         fragment.title = title;

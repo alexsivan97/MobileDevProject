@@ -16,6 +16,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.mobiledevproject.R;
+import com.example.mobiledevproject.config.API;
 import com.example.mobiledevproject.config.StorageConfig;
 import com.example.mobiledevproject.model.Group;
 import com.example.mobiledevproject.model.GroupCreate;
@@ -118,20 +119,18 @@ public class CreateGroupActivity extends AppCompatActivity {
                 GroupCreate info = getCreateInfo();
                 Group group = new Group(info);
 
-                //  这里用户信息和token都应该来自登录界面，现在模拟操作，我需要先拿到token
-                UserCreate user = new UserCreate("zx", "123");
-                String url = "https://zxzx.applinzi.com/api/v1/auth/login";
+                Intent intent = new Intent();
+                UserCreate user = (UserCreate)intent.getSerializableExtra("user");
+
 
                 //上传json格式数据
                 String userInfo = gson.toJson(user);
                 String groupInfo = gson.toJson(group);
 
-                String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1aWQiOjEsIm+V4cCI6MTU3NTgwODc4NiwiaWF0IjoxNTc1ODAxNTg2LCJuYmYiOjE1NzU4MDE1ODZ9.ej-usoW8f0ykYr4q0s8gAfnmUxps2SKOw5zuMvCpGTw";
-
                 Log.i(TAG, "onClick: " + userInfo);
                 Log.i(TAG, "onClick: " + groupInfo);
 
-                HttpUtil.postOkHttpRequest(url, userInfo, new Callback() {
+                HttpUtil.postOkHttpRequest(API.CIRCLE, groupInfo, new Callback() {
                     @Override
                     public void onFailure(Call call, IOException e) {
                         e.printStackTrace();
@@ -141,10 +140,11 @@ public class CreateGroupActivity extends AppCompatActivity {
                     public void onResponse(Call call, Response response) throws IOException {
 
                         String responseBody = response.body().string();
-
                         Log.i(TAG, "onResponse: " + responseBody);
 
                         JsonObject jsonObject;
+
+
                         try {
                             jsonObject = (JsonObject) new JsonParser().parse(responseBody);
                             int status = jsonObject.get("status").getAsInt();
@@ -178,13 +178,10 @@ public class CreateGroupActivity extends AppCompatActivity {
                                 }
                             });
                         }
-
-
                     }
                 });
 
 
-                Intent intent = new Intent();
                 intent.putExtra("group_info", info);
                 setResult(RESULT_OK, intent);
                 finish();
@@ -207,7 +204,7 @@ public class CreateGroupActivity extends AppCompatActivity {
         }
     };
 
-    private void updateToken(String token){
+    public void updateToken(String token){
         Utility.setData(CreateGroupActivity.this, StorageConfig.SP_KEY_TOKEN, token);
     }
 

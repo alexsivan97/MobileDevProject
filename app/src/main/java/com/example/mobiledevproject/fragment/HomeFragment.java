@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mobiledevproject.R;
 import com.example.mobiledevproject.activity.CreateGroupActivity;
+import com.example.mobiledevproject.activity.HomeActivity;
 import com.example.mobiledevproject.adapter.ListRcvAdapter;
 import com.example.mobiledevproject.model.GroupCreate;
 import com.example.mobiledevproject.util.Utility;
@@ -91,6 +92,7 @@ public class HomeFragment extends Fragment {
             public void onClick(View v) {
                 Log.i(TAG, "onClick: 添加一个圈子");
                 Intent intent = new Intent(getActivity(), CreateGroupActivity.class);
+                intent.putExtra("user", ((HomeActivity)getActivity()).user);
                 startActivityForResult(intent, 1);
             }
         });
