@@ -1,10 +1,16 @@
 package com.example.mobiledevproject.activity;
 
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -65,6 +71,7 @@ public class CheckinActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String userId = "0011";
                 String content = contentET.getText().toString();
+                imagePath.remove("PHOTO_TAKING");
                 List<String> localImages = imagePath;
                 List<String> onlineImages = null;
                 if (content == null && localImages == null) {
@@ -143,10 +150,43 @@ public class CheckinActivity extends AppCompatActivity {
     protected void loadData() {
         imagePath =  new ArrayList<>();
         imagePath.add("PHOTO_TAKING");
+        if (ContextCompat.checkSelfPermission(CheckinActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(CheckinActivity.this,
+                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                    1);
+
+        }
+
+    }
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case 1:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                } else {
+                    System.exit(0);
+                }
+
+        }
     }
 
-    @Override
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         super.onActivityResult(requestCode, resultCode, data);
