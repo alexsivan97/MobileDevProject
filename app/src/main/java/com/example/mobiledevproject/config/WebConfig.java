@@ -8,7 +8,7 @@ public class WebConfig {
 
     //  开发时用的token 临时
     public static final String TOKEN =
-            "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1aWQiOjEsImV4cCI6MTU3NTkxMDM0OSwiaWF0IjoxNTc1OTAzMTQ5LCJuYmYiOjE1NzU5MDMxNDl9.vmd6SJ2yYpgnEkclvet5E8Q9jIdztZnNpFM0FYMora8";
+            "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1aWQiOjEsImV4cCI6MTU3NTk0NjUxNSwiaWF0IjoxNTc1OTM5MzE1LCJuYmYiOjE1NzU5MzkzMTV9.eAefTgmYIjOswG_p9IvTK1997BoaO80BDoTF_GKiTfs";
 
 
 }

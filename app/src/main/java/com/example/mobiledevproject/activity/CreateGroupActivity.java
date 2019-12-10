@@ -3,6 +3,8 @@ package com.example.mobiledevproject.activity;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -14,10 +16,12 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.mobiledevproject.R;
+import com.example.mobiledevproject.config.StorageConfig;
 import com.example.mobiledevproject.model.Group;
 import com.example.mobiledevproject.model.GroupCreate;
 import com.example.mobiledevproject.model.UserCreate;
 import com.example.mobiledevproject.util.HttpUtil;
+import com.example.mobiledevproject.util.Utility;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
@@ -64,8 +68,6 @@ public class CreateGroupActivity extends AppCompatActivity {
         viewSetOnClick();
 
     }
-
-
 
     private void viewSetOnClick() {
         btnCgStartat.setOnClickListener(new View.OnClickListener() {
@@ -116,7 +118,6 @@ public class CreateGroupActivity extends AppCompatActivity {
                 GroupCreate info = getCreateInfo();
                 Group group = new Group(info);
 
-
                 //  这里用户信息和token都应该来自登录界面，现在模拟操作，我需要先拿到token
                 UserCreate user = new UserCreate("zx", "123");
                 String url = "https://zxzx.applinzi.com/api/v1/auth/login";
@@ -125,7 +126,7 @@ public class CreateGroupActivity extends AppCompatActivity {
                 String userInfo = gson.toJson(user);
                 String groupInfo = gson.toJson(group);
 
-                String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1aWQiOjEsImV4cCI6MTU3NTgwODc4NiwiaWF0IjoxNTc1ODAxNTg2LCJuYmYiOjE1NzU4MDE1ODZ9.ej-usoW8f0ykYr4q0s8gAfnmUxps2SKOw5zuMvCpGTw";
+                String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1aWQiOjEsIm+V4cCI6MTU3NTgwODc4NiwiaWF0IjoxNTc1ODAxNTg2LCJuYmYiOjE1NzU4MDE1ODZ9.ej-usoW8f0ykYr4q0s8gAfnmUxps2SKOw5zuMvCpGTw";
 
                 Log.i(TAG, "onClick: " + userInfo);
                 Log.i(TAG, "onClick: " + groupInfo);
@@ -191,6 +192,25 @@ public class CreateGroupActivity extends AppCompatActivity {
         });
     }
 
+    private Handler handler = new Handler(){
+        public void handleMessage(Message msg){
+            super.handleMessage(msg);
+            switch (msg.what){
+                case -1:
+                    Log.i(TAG, "handleMessage: "+(String)msg.obj);
+                    break;
+                case 1:
+                    String token = (String)msg.obj;
+                    updateToken(token);
+                    break;
+            }
+        }
+    };
+
+    private void updateToken(String token){
+        Utility.setData(CreateGroupActivity.this, StorageConfig.SP_KEY_TOKEN, token);
+    }
+
     private GroupCreate getCreateInfo() {
         GroupCreate groupCreate = new GroupCreate();
         groupCreate.setGroupName(etCgName.getText().toString());
@@ -200,6 +220,5 @@ public class CreateGroupActivity extends AppCompatActivity {
 
         return groupCreate;
     }
-
 
 }

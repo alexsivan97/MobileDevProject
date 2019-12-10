@@ -1,12 +1,24 @@
 package com.example.mobiledevproject.util;
 
-import com.example.mobiledevproject.config.WebConfig;
+import android.os.Handler;
+import android.os.Message;
 
+import com.example.mobiledevproject.config.API;
+import com.example.mobiledevproject.config.WebConfig;
+import com.example.mobiledevproject.model.UserCreate;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
+
+import java.io.IOException;
+
+import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
+import okhttp3.Response;
 
 public class HttpUtil {
 
@@ -36,33 +48,43 @@ public class HttpUtil {
         okHttpClient.newCall(request).enqueue(callback);
     }
 
-//    public static String getToken(UserCreate user){
-//        Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
-//        String jsonInfo = gson.toJson(user);
-//        final String accessToken;
-//        postOkHttpRequest(API.LOGIN, jsonInfo, new Callback() {
-//            @Override
-//            public void onFailure(Call call, IOException e) {
-//
-//            }
-//            @Override
-//            public void onResponse(Call call, Response response) throws IOException {
-//                String responseBody = response.body().string();
-//
-//                JsonObject jsonObject;
-//                try {
-//                    jsonObject = (JsonObject) new JsonParser().parse(responseBody);
-//                    int status = jsonObject.get("status").getAsInt();
-//                    if (status == 1) {
-//                        JsonObject data = jsonObject.get("data").getAsJsonObject();
-//                        accessToken = data.get("accessToken").getAsString();
-//                    }
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        });
-//
-//
-//    }
+    public static void getToken(UserCreate user, Handler handler){
+        Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+        String jsonInfo = gson.toJson(user);
+        Message message = handler.obtainMessage();
+
+        postOkHttpRequest(API.LOGIN, jsonInfo, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                e.printStackTrace();
+                message.obj = "网络请求错误，请重试";
+                message.what = -1;
+                handler.sendMessage(message);
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                String responseBody = response.body().string();
+                JsonObject jsonObject;
+                if((jsonObject=StatusCodeUtil.isNormalResponse(responseBody))==null){
+                    message.obj = "网络请求错误，请重试";
+                    message.what = -1;
+                    handler.sendMessage(message);
+                } else {
+                    int status = jsonObject.get("status").getAsInt();
+                    if(!StatusCodeUtil.isNormalStatus(status)){
+                        message.obj = "返回信息错误，错误码"+status;
+                        message.what = -1;
+                        handler.sendMessage(message);
+                    } else{
+                        JsonObject data = jsonObject.get("data").getAsJsonObject();
+                        String accessToken = data.get("accessToken").getAsString();
+                        message.obj = accessToken;
+                        message.what = 1;
+                        handler.sendMessage(message);
+                    }
+                }
+            }
+        });
+    }
 }
