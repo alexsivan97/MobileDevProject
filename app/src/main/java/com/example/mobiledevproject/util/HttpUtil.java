@@ -60,6 +60,8 @@ public class HttpUtil {
     }
 
 
+
+
     public static void getToken(UserCreate user, Handler handler){
         Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
         String jsonInfo = gson.toJson(user);

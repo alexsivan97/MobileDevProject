@@ -9,14 +9,15 @@ import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 
 import com.example.mobiledevproject.R;
-import com.example.mobiledevproject.model.UserCreate;
+import com.example.mobiledevproject.model.User;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 
 
 public class MyFragment extends Fragment {
 
-    UserCreate user;
+    User user;
     @BindView(R.id.tv_my_username)
     TextView tvMyUsername;
     @BindView(R.id.tv_my_userdescription)
@@ -27,7 +28,7 @@ public class MyFragment extends Fragment {
     }
 
 
-    public static MyFragment newInstance(UserCreate user) {
+    public static MyFragment newInstance(User user) {
         MyFragment fragment = new MyFragment();
         fragment.user = user;
         return fragment;
@@ -43,12 +44,15 @@ public class MyFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_my, container, false);
+        View view = inflater.inflate(R.layout.fragment_my, container, false);
+        ButterKnife.bind(this,view);
+        setUserInfo();
+
+        return view;
     }
 
     private void setUserInfo(){
-        tvMyUsername.setText(this.user.getUserId());
+        tvMyUsername.setText(this.user.getPassword());
     }
-
 
 }

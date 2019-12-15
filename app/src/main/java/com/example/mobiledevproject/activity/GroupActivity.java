@@ -48,16 +48,17 @@ public class GroupActivity extends AppCompatActivity {
 
     public GroupCreate group;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group);
         ButterKnife.bind(this);
 
+//        viewInit();
+        groupInit();
         viewPagerInit();
         tabInit();
-        groupInit();
+
 
         checkinBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,7 +73,7 @@ public class GroupActivity extends AppCompatActivity {
 
     private void viewPagerInit() {
         fragmentList = new ArrayList<>();
-        fragmentList.add(IntroFragment.newInstance("简介", "内容"));
+        fragmentList.add(IntroFragment.newInstance("简介", group));
         fragmentList.add(GroupCheckinFragment.newInstance("动态", "内容"));
         fragmentList.add(CircleFragment.newInstance("圈子", "内容"));
         fragmentList.add(ManageFragment.newInstance("管理", "内容"));

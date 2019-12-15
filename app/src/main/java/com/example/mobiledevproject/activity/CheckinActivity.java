@@ -100,7 +100,6 @@ public class CheckinActivity extends AppCompatActivity {
                         objectOutputStream.writeObject(messageBeanList);
                         fileOutputStream.close();
                         objectOutputStream.close();
-                        System.out.println("=================hhhhhhhhhhhhhhhhhhh============");
                     } catch (FileNotFoundException e) {
                         e.printStackTrace();
                     } catch (IOException e){

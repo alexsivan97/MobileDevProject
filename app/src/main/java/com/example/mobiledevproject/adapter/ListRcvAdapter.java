@@ -51,6 +51,7 @@ public class ListRcvAdapter extends RecyclerView.Adapter<ListRcvAdapter.GroupVie
             public void onClick(View v) {
                 Log.i(TAG, "onClick: "+position);
                 GroupCreate group = infoList.get(position);
+                Log.i(TAG, "onClick: "+group.toString());
 
                 Intent intent = new Intent(context, GroupActivity.class);
                 intent.putExtra("group_info", group);

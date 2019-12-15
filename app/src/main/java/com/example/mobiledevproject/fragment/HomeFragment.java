@@ -16,13 +16,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mobiledevproject.R;
 import com.example.mobiledevproject.activity.CreateGroupActivity;
-import com.example.mobiledevproject.activity.HomeActivity;
 import com.example.mobiledevproject.adapter.ListRcvAdapter;
 import com.example.mobiledevproject.model.GroupCreate;
+import com.example.mobiledevproject.model.User;
 import com.example.mobiledevproject.util.Utility;
 import com.google.android.material.card.MaterialCardView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -34,6 +33,8 @@ public class HomeFragment extends Fragment {
     private static final String TAG = "HomeFragment";
     Unbinder unbinder;
     public static final String SP_GROUP_LIST_KEY = "group_list";
+
+    public User user;
 
     ListRcvAdapter adapter;
     List<GroupCreate> infoList;
@@ -48,8 +49,9 @@ public class HomeFragment extends Fragment {
     public HomeFragment() {
     }
 
-    public static HomeFragment newInstance() {
+    public static HomeFragment newInstance(User user) {
         HomeFragment fragment = new HomeFragment();
+        fragment.user = user;
         return fragment;
     }
 
@@ -81,8 +83,9 @@ public class HomeFragment extends Fragment {
         if(Utility.hasSpItem(getContext(), SP_GROUP_LIST_KEY)){
             infoList = Utility.getDataList(getContext(), SP_GROUP_LIST_KEY, GroupCreate.class);
         } else {
-            //  此处应该从数据库中加载已经加入的小组
-            infoList = new ArrayList<GroupCreate>();
+            //  从User中读取信息
+            infoList = user.getJoinedCircles();
+
         }
     }
 
@@ -90,9 +93,9 @@ public class HomeFragment extends Fragment {
         groupsMcv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.i(TAG, "onClick: 添加一个圈子");
+                Log.i(TAG, "onClick: 创建一个圈子");
                 Intent intent = new Intent(getActivity(), CreateGroupActivity.class);
-                intent.putExtra("user", ((HomeActivity)getActivity()).user);
+                intent.putExtra("user", user);
                 startActivityForResult(intent, 1);
             }
         });
@@ -126,7 +129,8 @@ public class HomeFragment extends Fragment {
             case 1:
                 if (resultCode == getActivity().RESULT_OK) {
                     GroupCreate createdGroup = (GroupCreate) data.getSerializableExtra("group_info");
-                    Log.i(TAG, "onActivityResult: " + createdGroup.getGroupName());
+                    Log.i(TAG, "onActivityResult: "+createdGroup.toString());
+
                     //  新圈子信息添加到列表
                     addGroupItem(createdGroup);
                     //  刷新界面

@@ -22,7 +22,6 @@ public class CircleFragment extends Fragment implements GetFragmentInfo {
         // Required empty public constructor
     }
 
-    //  单例模式
     public static CircleFragment newInstance(String title, String content) {
         CircleFragment fragment = new CircleFragment();
         fragment.title = title;

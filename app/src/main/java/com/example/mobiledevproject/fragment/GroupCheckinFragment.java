@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mobiledevproject.R;
-import com.example.mobiledevproject.adapter.PhotoAdapter;
 import com.example.mobiledevproject.adapter.DynamicAdapter;
 import com.example.mobiledevproject.interfaces.GetFragmentInfo;
 import com.example.mobiledevproject.model.MessageBean;
@@ -81,24 +80,19 @@ public class GroupCheckinFragment extends Fragment implements GetFragmentInfo {
             File file = new File(AbsolutePath +"/" + path);
             System.out.println(file.exists());
             if (file.exists()) {
-                System.out.println("=================aaaaaaa============");
                 List<MessageBean> dynamicData;
                 FileInputStream fileInputStream = getContext().openFileInput(path);
                 ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
                 dynamicData = (ArrayList)objectInputStream.readObject();
                 System.out.println(dynamicData.size());
                 List<String> data = null;
-                System.out.println("=================1============");
                 fileInputStream.close();
                 objectInputStream.close();
 
                 DynamicAdapter dynamicAdapter = new DynamicAdapter(getContext(), dynamicData);
                 RecyclerView recyclerView = view.findViewById(R.id.group_message_rv);
-                System.out.println("=================2============");
                 recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-                System.out.println("=================3============");
                 recyclerView.setAdapter(dynamicAdapter);
-                System.out.println("=================4============");
             }
 
         } catch (Exception e) {

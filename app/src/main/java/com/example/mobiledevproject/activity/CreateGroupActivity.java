@@ -20,6 +20,7 @@ import com.example.mobiledevproject.R;
 import com.example.mobiledevproject.config.API;
 import com.example.mobiledevproject.config.StorageConfig;
 import com.example.mobiledevproject.model.GroupCreate;
+import com.example.mobiledevproject.model.User;
 import com.example.mobiledevproject.model.UserCreate;
 import com.example.mobiledevproject.util.HttpUtil;
 import com.example.mobiledevproject.util.StatusCodeUtil;
@@ -88,7 +89,6 @@ public class CreateGroupActivity extends AppCompatActivity {
             }
         });
 
-
         //  选择开始时间
         btnCgStartat.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -132,7 +132,8 @@ public class CreateGroupActivity extends AppCompatActivity {
                 Intent intentFromHome = getIntent();
                 GroupCreate group = getCreateInfo();
                 //  user信息用于给group添加masterId，并且在需要token的时候用user信息来重新申请
-                UserCreate user = (UserCreate) intentFromHome.getSerializableExtra("user");
+                User userSrc = (User) intentFromHome.getSerializableExtra("user");
+                UserCreate user = new UserCreate(userSrc);
 
                 group.setMasterId(user.getUserId());
                 String groupInfo = gson.toJson(group);
@@ -178,9 +179,7 @@ public class CreateGroupActivity extends AppCompatActivity {
                             Log.i(TAG, "onResponse: 响应内容错误");
                         }
                     }
-//
                 });
-
             }
         });
     }
@@ -218,7 +217,6 @@ public class CreateGroupActivity extends AppCompatActivity {
 
 //        groupCreate.setStartAt(tvCgStartat.getText().toString());
 //        groupCreate.setEndAt(tvCgEndat.getText().toString());
-
         return groupCreate;
     }
 

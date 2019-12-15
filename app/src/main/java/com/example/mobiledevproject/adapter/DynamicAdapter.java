@@ -50,7 +50,6 @@ public class DynamicAdapter extends RecyclerView.Adapter<DynamicAdapter.ViewHold
         }
 
         photoAdapter = new PhotoAdapter(this.context,imagePaths);
-        System.out.println("+++++++++++++++++++++++++"+imagePaths+"+++++++++++");
         viewHolder.images.setAdapter(photoAdapter);
 
         viewHolder.time.setText(messageList.get(position).getTime());

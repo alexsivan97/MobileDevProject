@@ -22,6 +22,12 @@ public class UserCreate implements Serializable {
 
     }
 
+    public UserCreate(User user){
+        this.userName = user.getUserName();
+        this.password = user.getPassword();
+        this.userId = user.getUserId();
+    }
+
     public UserCreate(String userName, String password){
         this.userName = userName;
         this.password = password;

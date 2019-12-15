@@ -14,11 +14,15 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.mobiledevproject.R;
 import com.example.mobiledevproject.config.API;
+import com.example.mobiledevproject.model.GroupCreate;
+import com.example.mobiledevproject.model.User;
 import com.example.mobiledevproject.model.UserCreate;
 import com.example.mobiledevproject.util.HttpUtil;
 import com.example.mobiledevproject.util.StatusCodeUtil;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import java.io.IOException;
@@ -119,12 +123,46 @@ public class LoginActivity extends AppCompatActivity {
                                         JsonObject data = jsonObject.get("data").getAsJsonObject();
                                         String token = data.get("accessToken").getAsString();
                                         int userID = data.get("userID").getAsInt();
+
                                         info.setUserId(userID);
+                                        User user = new User(info);
+
+
+                                        JsonArray joinedCircles = data.get("joinedCircles").getAsJsonArray();
+                                        JsonArray otherCircles = data.get("otherCircles").getAsJsonArray();
+
+                                        for(JsonElement group : joinedCircles){
+                                            JsonObject cur = group.getAsJsonObject();
+
+                                            GroupCreate createdGroup = new GroupCreate();
+                                            createdGroup.setGroupName(cur.get("name").getAsString());
+                                            createdGroup.setDescription(cur.get("desc").getAsString());
+                                            createdGroup.setCheckRule(cur.get("checkRule").getAsString());
+                                            createdGroup.setMasterId(cur.get("circleMaster_id").getAsInt());
+                                            createdGroup.setStartAt(cur.get("startAt").getAsString());
+                                            createdGroup.setEndAt(cur.get("endAt").getAsString());
+                                            createdGroup.setType(cur.get("type").getAsString());
+                                            user.getJoinedCircles().add(createdGroup);
+
+                                        }
+
+                                        for(JsonElement group : otherCircles){
+                                            JsonObject cur = group.getAsJsonObject();
+
+                                            GroupCreate createdGroup = new GroupCreate();
+                                            createdGroup.setGroupName(cur.get("name").getAsString());
+                                            createdGroup.setDescription(cur.get("desc").getAsString());
+                                            createdGroup.setCheckRule(cur.get("checkRule").getAsString());
+                                            createdGroup.setMasterId(cur.get("circleMaster_id").getAsInt());
+                                            createdGroup.setStartAt(cur.get("startAt").getAsString());
+                                            createdGroup.setEndAt(cur.get("endAt").getAsString());
+                                            createdGroup.setType(cur.get("type").getAsString());
+                                            user.getOtherCircles().add(createdGroup);
+                                        }
 
                                         it_login_to_home.putExtra("token", token);
-
-                                        it_login_to_home.putExtra("user_info", info);
-                                        Log.i(TAG, "run: "+info.toString());
+                                        it_login_to_home.putExtra("user_info", user);
+                                        Log.i(TAG, "run: "+user.toString());
 
                                         startActivity(it_login_to_home);
                                     }
@@ -140,6 +178,8 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
+
+
 
     private UserCreate getUserInfo() {
         UserCreate userCreate = new UserCreate();

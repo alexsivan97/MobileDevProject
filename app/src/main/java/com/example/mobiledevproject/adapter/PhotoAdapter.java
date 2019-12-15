@@ -64,7 +64,6 @@ public class PhotoAdapter extends BaseAdapter {
         }else {
             RequestOptions options = new RequestOptions()
                     .centerCrop();
-            System.out.println("============" + path +"=============");
             Glide.with(context)
                     .load(path)
                     .apply(options)

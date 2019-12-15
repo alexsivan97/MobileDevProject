@@ -18,7 +18,7 @@ import com.example.mobiledevproject.fragment.ExploreFragment;
 import com.example.mobiledevproject.fragment.HomeFragment;
 import com.example.mobiledevproject.fragment.MyFragment;
 import com.example.mobiledevproject.model.GroupCreate;
-import com.example.mobiledevproject.model.UserCreate;
+import com.example.mobiledevproject.model.User;
 import com.example.mobiledevproject.util.Utility;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -35,8 +35,7 @@ public class HomeActivity extends AppCompatActivity {
     private static final String TAG = "HomeActivity";
 
     //  来自登录界面的信息，这里先写成静态数据
-    public UserCreate user;
-
+    public User user;
 
     ListRcvAdapter adapter;
     List<GroupCreate> infoList;
@@ -63,18 +62,16 @@ public class HomeActivity extends AppCompatActivity {
         bodyVp.setCurrentItem(0);
     }
 
-
     //  目前是静态实现
     private void userInfoInit(){
         //  从intent中读取数据
         Intent intent = getIntent();
-        user = (UserCreate)intent.getSerializableExtra("user_info");
+        user = (User) intent.getSerializableExtra("user_info");
         String token = intent.getStringExtra("token");
         Log.i(TAG, "userInfoInit: "+token);
         Log.i(TAG, "userInfoInit: "+user.getUserName());
         //  从intent中读取token
         Utility.setData(HomeActivity.this, StorageConfig.SP_KEY_TOKEN, token);
-
     }
 
     private void viewPagerInit() {
@@ -91,7 +88,6 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onPageSelected(int position) {
                 //  让底部按钮随着页面的滑动一起变化
-
                 if(menuItem!=null){
                     menuItem.setChecked(false);
                 } else {
@@ -99,7 +95,6 @@ public class HomeActivity extends AppCompatActivity {
                 }
                 menuItem = bottomBnv.getMenu().getItem(position);
                 menuItem.setChecked(true);
-
             }
 
             @Override

@@ -1,32 +1,50 @@
 package com.example.mobiledevproject.model;
 
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
-public class User {
+public class User implements Serializable {
 
-    @Expose(serialize=false)
     private int userId;
 
-
-    @Expose
-    @SerializedName("username")
     private String userName;
 
-
-    @Expose
-    @SerializedName("password")
     private String password;
 
+    private List<GroupCreate> joinedCircles;
+    private List<GroupCreate> otherCircles;
 
+    public List<GroupCreate> getJoinedCircles() {
+        return joinedCircles;
+    }
+
+    public void setJoinedCircles(List<GroupCreate> joinedCircles) {
+        this.joinedCircles = joinedCircles;
+    }
+
+    public List<GroupCreate> getOtherCircles() {
+        return otherCircles;
+    }
+
+    public void setOtherCircles(List<GroupCreate> otherCircles) {
+        this.otherCircles = otherCircles;
+    }
 
     public User(String userName, String password){
         this.userName = userName;
         this.password = password;
+
     }
 
-    public User(UserCreate userCreate){
 
+
+    public User(UserCreate userCreate){
+        this.userName = userCreate.getUserName();
+        this.password = userCreate.getPassword();
+        this.userId = userCreate.getUserId();
+        joinedCircles = new ArrayList<>();
+        otherCircles = new ArrayList<>();
     }
 
     public int getUserId() {
