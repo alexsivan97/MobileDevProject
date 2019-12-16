@@ -56,13 +56,6 @@
         app:layout_constraintVertical_chainStyle="packed"
         />
 
-    <view
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:background="@color/border_color"
-
-        app:layout_constraintStart_toEndOf="@+id/vgl_0.05"
-        app:layout_constraintTop_toBottomOf="@id/tv_manage_calendar" />
 
     <TextView
         android:layout_width="0dp"
