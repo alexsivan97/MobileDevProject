@@ -31,13 +31,15 @@ public class User implements Serializable {
         this.otherCircles = otherCircles;
     }
 
+    public User(){
+
+    }
+
     public User(String userName, String password){
         this.userName = userName;
         this.password = password;
 
     }
-
-
 
     public User(UserCreate userCreate){
         this.userName = userCreate.getUserName();

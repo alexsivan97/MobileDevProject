@@ -12,14 +12,12 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.example.mobiledevproject.R;
 import com.example.mobiledevproject.adapter.ContentsVpAdapter;
-
 import com.example.mobiledevproject.fragment.CircleFragment;
-
 import com.example.mobiledevproject.fragment.GroupCheckinFragment;
 import com.example.mobiledevproject.fragment.IntroFragment;
 import com.example.mobiledevproject.fragment.ManageFragment;
 import com.example.mobiledevproject.interfaces.GetFragmentInfo;
-import com.example.mobiledevproject.model.GroupCreate;
+import com.example.mobiledevproject.model.Group;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
@@ -46,7 +44,7 @@ public class GroupActivity extends AppCompatActivity {
     @BindView(R.id.btn_checkin)
     Button checkinBtn;
 
-    public GroupCreate group;
+    public Group group;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,17 +91,17 @@ public class GroupActivity extends AppCompatActivity {
 
     private void intentReceived() {
         Intent intent = getIntent();
-        group = (GroupCreate) intent.getSerializableExtra("group_info");
+        group = (Group) intent.getSerializableExtra("group_info");
         viewSetInfo(group);
     }
 
-    private void viewSetInfo(GroupCreate group) {
+    private void viewSetInfo(Group group) {
 
         nameTv.setText(group.getGroupName());
 
 //        nameTv.setText("aa");
         //  此处成员数据要通过数据库读取
-        memberNumTv.setText("成员10人");
+        memberNumTv.setText("成员"+group.getMemberList().size()+"人");
 
         //  此处小组头像要通过数据库读取
 //        groupIconIv.setImageResource();

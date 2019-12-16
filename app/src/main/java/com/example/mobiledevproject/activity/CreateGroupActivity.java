@@ -128,15 +128,14 @@ public class CreateGroupActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Gson gsonEx = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
-                Gson gson = new Gson();
                 Intent intentFromHome = getIntent();
-                GroupCreate group = getCreateInfo();
+                GroupCreate groupSrc = getCreateInfo();
                 //  user信息用于给group添加masterId，并且在需要token的时候用user信息来重新申请
                 User userSrc = (User) intentFromHome.getSerializableExtra("user");
                 UserCreate user = new UserCreate(userSrc);
 
-                group.setMasterId(user.getUserId());
-                String groupInfo = gson.toJson(group);
+                groupSrc.setMasterId(user.getUserId());
+                String groupInfo = gsonEx.toJson(groupSrc);
                 String userInfo = gsonEx.toJson(user);
                 String token = Utility.getData(CreateGroupActivity.this, StorageConfig.SP_KEY_TOKEN);
 
@@ -162,10 +161,14 @@ public class CreateGroupActivity extends AppCompatActivity {
                             if (StatusCodeUtil.isNormalStatus(status)) {
                                 JsonObject data = jsonObject.get("data").getAsJsonObject();
                                 int groupId = data.get("id").getAsInt();
+                                groupSrc.setGroupId(groupId);
+
                                 Log.i(TAG, "onResponse: 圈子已创建");
                                 Log.i(TAG, "onResponse: " + groupId);
+
+
                                 Intent intentBackHome = new Intent();
-                                intentBackHome.putExtra("group_info", group);
+                                intentBackHome.putExtra("group_info", groupSrc);
                                 setResult(RESULT_OK, intentBackHome);
                                 finish();
                             } else if (StatusCodeUtil.isTokenError(status)) {

@@ -1,21 +1,33 @@
 package com.example.mobiledevproject.model;
 
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
 public class GroupCreate implements Serializable {
 
+    @Expose(serialize = false)
+    private int groupId;
+
+
+    @Expose
     @SerializedName("name")
     private String groupName;
+    @Expose
     private String type = "";
+    @Expose
     private String startAt;
+    @Expose
     private String endAt;
 
+    @Expose
     @SerializedName("desc")
     private String description;
+    @Expose
     private String checkRule = "";
 
+    @Expose
     @SerializedName("circleMasterId")
     private int masterId;
 
@@ -37,6 +49,14 @@ public class GroupCreate implements Serializable {
     public GroupCreate(String groupName, String description){
         this.groupName = groupName;
         this.description = description;
+    }
+
+    public int getGroupId() {
+        return groupId;
+    }
+
+    public void setGroupId(int groupId) {
+        this.groupId = groupId;
     }
 
     public String getType() {

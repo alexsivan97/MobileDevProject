@@ -17,30 +17,21 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mobiledevproject.R;
-import com.example.mobiledevproject.activity.HomeActivity;
 import com.example.mobiledevproject.adapter.ListRcvAdapter;
-import com.example.mobiledevproject.config.API;
 import com.example.mobiledevproject.config.StorageConfig;
 import com.example.mobiledevproject.model.GroupCreate;
-import com.example.mobiledevproject.model.UserCreate;
-import com.example.mobiledevproject.util.HttpUtil;
-import com.example.mobiledevproject.util.StatusCodeUtil;
+import com.example.mobiledevproject.model.User;
 import com.example.mobiledevproject.util.Utility;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.Response;
 
 
 public class ExploreFragment extends Fragment {
@@ -60,12 +51,15 @@ public class ExploreFragment extends Fragment {
     @BindView(R.id.btn_explore_search)
     Button serarchBtn;
 
+    public User user;
+
     public ExploreFragment() {
         // Required empty public constructor
     }
 
-    public static ExploreFragment newInstance() {
+    public static ExploreFragment newInstance(User user) {
         ExploreFragment fragment = new ExploreFragment();
+        fragment.user = user;
         return fragment;
     }
 
@@ -101,60 +95,56 @@ public class ExploreFragment extends Fragment {
     }
 
     private void dataInit() {
-        if(infoList!=null){
-            listRcv.removeAllViews();
-            adapter.notifyDataSetChanged();
-        }
-        infoList = new ArrayList<>();
+//        if(infoList!=null){
+//            listRcv.removeAllViews();
+//            adapter.notifyDataSetChanged();
+//        }
+        infoList = user.getOtherCircles();
 
-        //  从数据库中读取groups
-        String address = API.CIRCLE;
-        String responsestr;
-
-        //  user信息
-        final UserCreate currentUser = ((HomeActivity) getActivity()).user;
-        //  本地存储的token信息
-        String token = Utility.getData(getContext(), StorageConfig.SP_KEY_TOKEN);
-        HttpUtil.getRequestWithToken(address, token, new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                e.printStackTrace();
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                String responseBody = response.body().string();
-                Log.i(TAG, "onResponse: " + responseBody);
-                JsonObject jsonObject;
-
-                //  判断是否得到正确的请求
-                if((jsonObject=StatusCodeUtil.isNormalResponse(responseBody))!=null){
-                    int status = jsonObject.get("status").getAsInt();
-                    if(StatusCodeUtil.isNormalStatus(status)){
-                        getActivity().runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                parseGroupList(responseBody);
-                            }
-                        });
-                    } else {
-                        //  如果token失效，重新申请一个
-                        if(StatusCodeUtil.isTokenError(status)){
-                            Log.i(TAG, "onResponse: "+"token失效，已经重新生成");
-                            HttpUtil.getToken(currentUser, handler);
-                        }
-                    }
-                } else {
-                    getActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Log.i(TAG, "run: "+"网络请求错误");
-                        }
-                    });
-                }
-
-            }
-        });
+//        //  本地存储的token信息
+//        String token = Utility.getData(getContext(), StorageConfig.SP_KEY_TOKEN);
+//        HttpUtil.getRequestWithToken(API.CIRCLE, token, new Callback() {
+//            @Override
+//            public void onFailure(Call call, IOException e) {
+//                e.printStackTrace();
+//            }
+//
+//            @Override
+//            public void onResponse(Call call, Response response) throws IOException {
+//                String responseBody = response.body().string();
+//                Log.i(TAG, "onResponse: " + responseBody);
+//                JsonObject jsonObject;
+//
+//                //  判断是否得到正确的请求
+//                if((jsonObject=StatusCodeUtil.isNormalResponse(responseBody))!=null){
+//                    int status = jsonObject.get("status").getAsInt();
+//                    if(StatusCodeUtil.isNormalStatus(status)){
+//                        getActivity().runOnUiThread(new Runnable() {
+//                            @Override
+//                            public void run() {
+//                                parseGroupList(responseBody);
+//                            }
+//                        });
+//                    } else {
+//                        //  如果token失效，重新申请一个
+//                        if(StatusCodeUtil.isTokenError(status)){
+//                            Log.i(TAG, "onResponse: "+"token失效，已经重新生成");
+//                            UserCreate userCreate = new UserCreate(user);
+//
+//                            HttpUtil.getToken(userCreate, handler);
+//                        }
+//                    }
+//                } else {
+//                    getActivity().runOnUiThread(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            Log.i(TAG, "run: "+"网络请求错误");
+//                        }
+//                    });
+//                }
+//
+//            }
+//        });
     }
 
     private Handler handler = new Handler(){

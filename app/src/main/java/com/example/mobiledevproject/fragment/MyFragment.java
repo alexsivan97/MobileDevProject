@@ -52,7 +52,7 @@ public class MyFragment extends Fragment {
     }
 
     private void setUserInfo(){
-        tvMyUsername.setText(this.user.getPassword());
+        tvMyUsername.setText(this.user.getUserName());
     }
 
 }

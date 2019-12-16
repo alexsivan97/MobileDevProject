@@ -138,7 +138,7 @@ public class LoginActivity extends AppCompatActivity {
                                             createdGroup.setGroupName(cur.get("name").getAsString());
                                             createdGroup.setDescription(cur.get("desc").getAsString());
                                             createdGroup.setCheckRule(cur.get("checkRule").getAsString());
-                                            createdGroup.setMasterId(cur.get("circleMaster_id").getAsInt());
+                                            createdGroup.setMasterId(cur.get("circleMasterId").getAsInt());
                                             createdGroup.setStartAt(cur.get("startAt").getAsString());
                                             createdGroup.setEndAt(cur.get("endAt").getAsString());
                                             createdGroup.setType(cur.get("type").getAsString());
@@ -153,7 +153,7 @@ public class LoginActivity extends AppCompatActivity {
                                             createdGroup.setGroupName(cur.get("name").getAsString());
                                             createdGroup.setDescription(cur.get("desc").getAsString());
                                             createdGroup.setCheckRule(cur.get("checkRule").getAsString());
-                                            createdGroup.setMasterId(cur.get("circleMaster_id").getAsInt());
+                                            createdGroup.setMasterId(cur.get("circleMasterId").getAsInt());
                                             createdGroup.setStartAt(cur.get("startAt").getAsString());
                                             createdGroup.setEndAt(cur.get("endAt").getAsString());
                                             createdGroup.setType(cur.get("type").getAsString());

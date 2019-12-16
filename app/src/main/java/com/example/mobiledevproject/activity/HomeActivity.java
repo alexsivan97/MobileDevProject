@@ -56,6 +56,7 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
         ButterKnife.bind(this);
 
+
         userInfoInit();
         viewPagerInit();
         navigationInit();
@@ -71,13 +72,15 @@ public class HomeActivity extends AppCompatActivity {
         Log.i(TAG, "userInfoInit: "+token);
         Log.i(TAG, "userInfoInit: "+user.getUserName());
         //  从intent中读取token
+        StorageConfig.SP_NAME = user.getUserName();
         Utility.setData(HomeActivity.this, StorageConfig.SP_KEY_TOKEN, token);
+
     }
 
     private void viewPagerInit() {
         fragList = new ArrayList<>();
-        fragList.add(HomeFragment.newInstance());
-        fragList.add(ExploreFragment.newInstance());
+        fragList.add(HomeFragment.newInstance(user));
+        fragList.add(ExploreFragment.newInstance(user));
         fragList.add(MyFragment.newInstance(user));
         bodyVp.setAdapter(new BodyVpAdapter(getSupportFragmentManager(), fragList));
 

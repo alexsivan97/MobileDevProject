@@ -85,7 +85,7 @@ public class HomeFragment extends Fragment {
         } else {
             //  从User中读取信息
             infoList = user.getJoinedCircles();
-
+            Utility.setDataList(getContext(), SP_GROUP_LIST_KEY, infoList);
         }
     }
 
@@ -103,7 +103,8 @@ public class HomeFragment extends Fragment {
 
     private void addGroupItem(GroupCreate createdGroup) {
         adapter.addData(createdGroup, infoList.size());
-        Utility.setDataList(getContext(), "group_list", infoList);
+//          更新
+        Utility.setDataList(getContext(), SP_GROUP_LIST_KEY, infoList);
 
         Log.i(TAG, "addGroupItem: add an item");
         Log.i(TAG, "addGroupItem: list size " + infoList.size());

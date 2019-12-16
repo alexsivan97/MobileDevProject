@@ -3,9 +3,11 @@ package com.example.mobiledevproject.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
-public class Group {
+public class Group implements Serializable {
 
     @Expose(serialize = false)
     private List<User> memberList;
@@ -35,14 +37,41 @@ public class Group {
     @Expose
     private String endAt;
 
+//
+
+    public String getCheckRule() {
+        return checkRule;
+    }
+
+    public void setCheckRule(String checkRule) {
+        this.checkRule = checkRule;
+    }
+
+    public String getStartAt() {
+        return startAt;
+    }
+
+    public void setStartAt(String startAt) {
+        this.startAt = startAt;
+    }
+
+    public String getEndAt() {
+        return endAt;
+    }
+
+    public void setEndAt(String endAt) {
+        this.endAt = endAt;
+    }
+
     public Group(GroupCreate groupCreate){
         this.groupName = groupCreate.getGroupName();
-        this.type = "default";
+        this.type = groupCreate.getType();
         this.description = groupCreate.getDescription();
-        this.checkRule = "";
-        this.masterId = -1;
+        this.checkRule = groupCreate.getCheckRule();
+        this.masterId = groupCreate.getMasterId();
         this.startAt = groupCreate.getStartAt();
         this.endAt = groupCreate.getEndAt();
+        this.memberList = new ArrayList<>();
     }
 
     public List<User> getMemberList() {
