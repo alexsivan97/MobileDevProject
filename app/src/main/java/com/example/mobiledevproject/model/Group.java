@@ -27,8 +27,10 @@ public class Group implements Serializable {
     @Expose
     private String checkRule;
     @Expose
+    @SerializedName("startAtDesc")
     private String startAt;
     @Expose
+    @SerializedName("endAtDesc")
     private String endAt;
 
 //
