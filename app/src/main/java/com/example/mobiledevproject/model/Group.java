@@ -33,7 +33,15 @@ public class Group implements Serializable {
     @SerializedName("endAtDesc")
     private String endAt;
 
-//
+    public boolean containsUser(User user){
+        int userId = user.getUserId();
+        for(User cur: memberList){
+            if(cur.getUserId()==userId){
+                return true;
+            }
+        }
+        return false;
+    }
 
     public String getCheckRule() {
         return checkRule;
