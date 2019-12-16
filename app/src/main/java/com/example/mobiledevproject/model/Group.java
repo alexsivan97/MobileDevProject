@@ -13,25 +13,19 @@ public class Group implements Serializable {
     private List<User> memberList;
     @Expose(serialize = false)
     private int groupId;
-
     @Expose
     @SerializedName("name")
     private String groupName;
-
     @Expose
     @SerializedName("circleMasterId")
     private int masterId;
-
     @Expose
     @SerializedName("desc")
     private String description;
-
-
     @Expose
     private String type;
     @Expose
     private String checkRule;
-
     @Expose
     private String startAt;
     @Expose

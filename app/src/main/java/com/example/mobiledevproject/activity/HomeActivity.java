@@ -12,12 +12,10 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.example.mobiledevproject.R;
 import com.example.mobiledevproject.adapter.BodyVpAdapter;
-import com.example.mobiledevproject.adapter.ListRcvAdapter;
 import com.example.mobiledevproject.config.StorageConfig;
 import com.example.mobiledevproject.fragment.ExploreFragment;
 import com.example.mobiledevproject.fragment.HomeFragment;
 import com.example.mobiledevproject.fragment.MyFragment;
-import com.example.mobiledevproject.model.GroupCreate;
 import com.example.mobiledevproject.model.User;
 import com.example.mobiledevproject.util.Utility;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -34,11 +32,8 @@ public class HomeActivity extends AppCompatActivity {
 
     private static final String TAG = "HomeActivity";
 
-    //  来自登录界面的信息，这里先写成静态数据
+    //  当前用户的信息
     public User user;
-
-    ListRcvAdapter adapter;
-    List<GroupCreate> infoList;
 
     //  添加fragment列表
     List<Fragment> fragList;
@@ -56,34 +51,37 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
         ButterKnife.bind(this);
 
-
+        //  用户信息初始化
         userInfoInit();
+        //  选项卡初始化
         viewPagerInit();
+        //  底部导航栏点击事件初始化
         navigationInit();
         bodyVp.setCurrentItem(0);
     }
 
-    //  目前是静态实现
     private void userInfoInit(){
         //  从intent中读取数据
         Intent intent = getIntent();
         user = (User) intent.getSerializableExtra("user_info");
         String token = intent.getStringExtra("token");
-        Log.i(TAG, "userInfoInit: "+token);
-        Log.i(TAG, "userInfoInit: "+user.getUserName());
-        //  从intent中读取token
+
+        //  配置当前用户专用文件
         StorageConfig.SP_NAME = user.getUserName();
+        //  将token本地化存储
         Utility.setData(HomeActivity.this, StorageConfig.SP_KEY_TOKEN, token);
 
     }
 
     private void viewPagerInit() {
+        //  配置各个选项卡对应的fragment
         fragList = new ArrayList<>();
+        //  每个fragment都接收user信息去使用
         fragList.add(HomeFragment.newInstance(user));
         fragList.add(ExploreFragment.newInstance(user));
         fragList.add(MyFragment.newInstance(user));
-        bodyVp.setAdapter(new BodyVpAdapter(getSupportFragmentManager(), fragList));
 
+        bodyVp.setAdapter(new BodyVpAdapter(getSupportFragmentManager(), fragList));
         bodyVp.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {

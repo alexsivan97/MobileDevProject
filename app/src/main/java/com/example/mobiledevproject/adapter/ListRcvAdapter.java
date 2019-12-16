@@ -71,6 +71,8 @@ public class ListRcvAdapter extends RecyclerView.Adapter<ListRcvAdapter.GroupVie
                 String token = Utility.getData(context, StorageConfig.SP_KEY_TOKEN);
                 String url = API.CIRCLE+groupId+"/members/";
                 Log.i(TAG, "onClick: "+url);
+                Group group = new Group(groupSrc);
+
 
                 HttpUtil.getRequestWithToken(url, token, new Callback() {
                     @Override
@@ -87,7 +89,6 @@ public class ListRcvAdapter extends RecyclerView.Adapter<ListRcvAdapter.GroupVie
                             int status = jsonObject.get("status").getAsInt();
                             if (StatusCodeUtil.isNormalStatus(status)) {
                                 //  正确
-                                Group group = new Group(groupSrc);
 
                                 JsonArray data = jsonObject.get("data").getAsJsonArray();
                                 for(JsonElement member:data){
@@ -97,9 +98,7 @@ public class ListRcvAdapter extends RecyclerView.Adapter<ListRcvAdapter.GroupVie
                                     user.setUserName(cur.get("Username").getAsString());
                                     group.getMemberList().add(user);
                                 }
-                                Intent intent = new Intent(context, GroupActivity.class);
-                                intent.putExtra("group_info", group);
-                                context.startActivity(intent);
+
                             } else {
                                 Log.i(TAG, "onResponse: " + status);
                             }
@@ -108,6 +107,10 @@ public class ListRcvAdapter extends RecyclerView.Adapter<ListRcvAdapter.GroupVie
                         }
                     }
                 });
+
+                Intent intent = new Intent(context, GroupActivity.class);
+                intent.putExtra("group_info", group);
+                context.startActivity(intent);
             }
         });
     }
