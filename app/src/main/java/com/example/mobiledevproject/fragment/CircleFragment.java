@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
 
+import com.example.mobiledevproject.MyApp;
 import com.example.mobiledevproject.R;
 import com.example.mobiledevproject.interfaces.GetFragmentInfo;
 
@@ -16,6 +17,7 @@ import butterknife.Unbinder;
 public class CircleFragment extends Fragment implements GetFragmentInfo {
     Unbinder unbinder;
     String title, content;
+    MyApp myApp;
 
 
     public CircleFragment() {
@@ -41,6 +43,8 @@ public class CircleFragment extends Fragment implements GetFragmentInfo {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_circle, container, false);
         unbinder = ButterKnife.bind(this, view);
+
+        myApp = (MyApp)getActivity().getApplication();
 
         return view;
     }

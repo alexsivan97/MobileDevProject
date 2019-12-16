@@ -21,6 +21,7 @@ import androidx.core.content.ContextCompat;
 
 import com.example.mobiledevproject.R;
 import com.example.mobiledevproject.adapter.PhotoAdapter;
+import com.example.mobiledevproject.model.Group;
 import com.example.mobiledevproject.model.MessageBean;
 import com.example.mobiledevproject.util.GlideEngine;
 import com.zhihu.matisse.Matisse;
@@ -50,6 +51,9 @@ public class CheckinActivity extends AppCompatActivity {
     private EditText contentET;
     private GridView imageGV;
     PhotoAdapter photoAdapter;
+
+    private Group group;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,6 +64,9 @@ public class CheckinActivity extends AppCompatActivity {
         imageGV.setAdapter(photoAdapter);
     }
     protected void initView() {
+
+        group = (Group)getIntent().getSerializableExtra("group");
+
         backIBtn = findViewById(R.id.checkin_back_ibtn);
         sendBtn = findViewById(R.id.checkin_send_btn);
         contentET = findViewById(R.id.checkin_content_et);
@@ -109,6 +116,8 @@ public class CheckinActivity extends AppCompatActivity {
                     }
                     imagePath.clear();
                     Intent intent = new Intent(CheckinActivity.this,GroupActivity.class);
+                    intent.putExtra("group_info", group);
+                    finish();
                     startActivity(intent);
                 }
             }
