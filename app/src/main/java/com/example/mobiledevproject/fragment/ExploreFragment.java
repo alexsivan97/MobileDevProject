@@ -71,7 +71,6 @@ public class ExploreFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_explore, container, false);
         unbinder = ButterKnife.bind(this, view);
         return view;
@@ -95,11 +94,13 @@ public class ExploreFragment extends Fragment {
     }
 
     private void dataInit() {
+
+        infoList = user.getOtherCircles();
 //        if(infoList!=null){
 //            listRcv.removeAllViews();
 //            adapter.notifyDataSetChanged();
 //        }
-        infoList = user.getOtherCircles();
+
 
 //        //  本地存储的token信息
 //        String token = Utility.getData(getContext(), StorageConfig.SP_KEY_TOKEN);

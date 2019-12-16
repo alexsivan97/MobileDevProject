@@ -103,7 +103,7 @@ public class HomeFragment extends Fragment {
 
     private void addGroupItem(GroupCreate createdGroup) {
         adapter.addData(createdGroup, infoList.size());
-//          更新
+        //  每次创建后都更新一下本地存储的内容
         Utility.setDataList(getContext(), SP_GROUP_LIST_KEY, infoList);
 
         Log.i(TAG, "addGroupItem: add an item");

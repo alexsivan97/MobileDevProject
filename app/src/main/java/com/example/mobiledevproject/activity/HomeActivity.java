@@ -12,6 +12,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.example.mobiledevproject.R;
 import com.example.mobiledevproject.adapter.BodyVpAdapter;
+import com.example.mobiledevproject.MyApp;
 import com.example.mobiledevproject.config.StorageConfig;
 import com.example.mobiledevproject.fragment.ExploreFragment;
 import com.example.mobiledevproject.fragment.HomeFragment;
@@ -45,11 +46,15 @@ public class HomeActivity extends AppCompatActivity {
 
     MenuItem menuItem;
 
+    public MyApp app;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         ButterKnife.bind(this);
+        app = (MyApp)getApplication();
+
 
         //  用户信息初始化
         userInfoInit();
@@ -58,6 +63,10 @@ public class HomeActivity extends AppCompatActivity {
         //  底部导航栏点击事件初始化
         navigationInit();
         bodyVp.setCurrentItem(0);
+
+
+
+
     }
 
     private void userInfoInit(){
@@ -65,6 +74,9 @@ public class HomeActivity extends AppCompatActivity {
         Intent intent = getIntent();
         user = (User) intent.getSerializableExtra("user_info");
         String token = intent.getStringExtra("token");
+
+        app.setUser(user);
+        app.setToken(token);
 
         //  配置当前用户专用文件
         StorageConfig.SP_NAME = user.getUserName();

@@ -57,6 +57,7 @@ public class ListRcvAdapter extends RecyclerView.Adapter<ListRcvAdapter.GroupVie
     public void onBindViewHolder(@NonNull GroupViewHolder holder, int position) {
 
         GroupCreate group = infoList.get(position);
+
         holder.groupNameTv.setText(group.getGroupName());
         holder.descriptionTv.setText(group.getDescription());
 
@@ -98,6 +99,9 @@ public class ListRcvAdapter extends RecyclerView.Adapter<ListRcvAdapter.GroupVie
                                     user.setUserName(cur.get("Username").getAsString());
                                     group.getMemberList().add(user);
                                 }
+                                Intent intent = new Intent(context, GroupActivity.class);
+                                intent.putExtra("group_info", group);
+                                context.startActivity(intent);
 
                             } else {
                                 Log.i(TAG, "onResponse: " + status);
@@ -108,9 +112,7 @@ public class ListRcvAdapter extends RecyclerView.Adapter<ListRcvAdapter.GroupVie
                     }
                 });
 
-                Intent intent = new Intent(context, GroupActivity.class);
-                intent.putExtra("group_info", group);
-                context.startActivity(intent);
+
             }
         });
     }

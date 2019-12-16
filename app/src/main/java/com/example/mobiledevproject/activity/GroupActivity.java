@@ -2,6 +2,7 @@ package com.example.mobiledevproject.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -12,12 +13,14 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.example.mobiledevproject.R;
 import com.example.mobiledevproject.adapter.ContentsVpAdapter;
+import com.example.mobiledevproject.MyApp;
 import com.example.mobiledevproject.fragment.CircleFragment;
 import com.example.mobiledevproject.fragment.GroupCheckinFragment;
 import com.example.mobiledevproject.fragment.IntroFragment;
 import com.example.mobiledevproject.fragment.ManageFragment;
 import com.example.mobiledevproject.interfaces.GetFragmentInfo;
 import com.example.mobiledevproject.model.Group;
+import com.example.mobiledevproject.model.User;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
@@ -45,6 +48,7 @@ public class GroupActivity extends AppCompatActivity {
     Button checkinBtn;
 
     public Group group;
+    public User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +60,10 @@ public class GroupActivity extends AppCompatActivity {
         groupInit();
         viewPagerInit();
         tabInit();
+
+        MyApp app = (MyApp)getApplication();
+        user = app.getUser();
+        Log.i(TAG, "onCreate: "+user.toString());
 
 
         checkinBtn.setOnClickListener(new View.OnClickListener() {
